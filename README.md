@@ -13,6 +13,8 @@ Another paragraph here
 
 1. Clone the repo
 2. Run `composer install`
+3. Run `npm install && npm run dev`
+4. Run `php artisan migrate`
 
 ## Laravel Sponsors
 
