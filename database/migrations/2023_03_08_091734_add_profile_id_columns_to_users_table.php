@@ -14,7 +14,7 @@ class AddProfileIdColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('profile_id')->after('id');
+            $table->integer('profile_id')->after('id')->nullable();
         });
     }
 
