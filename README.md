@@ -2,7 +2,7 @@
 
 ## About the System
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui quae fuga veritatis architecto, explicabo distinctio soluta dignissimos repudiandae corrupti error? Vel similique aperiam expedita soluta earum dolorem illo reprehenderit dolorum sint, cum fugiat, omnis laborum a. Perspiciatis velit debitis esse in, nesciunt quis atque porro omnis animi autem, dignissimos cum?
 
 - Item one
 - [Item 2 with link](https://laravel.com/).
@@ -15,10 +15,6 @@ Another paragraph here
 2. Run `composer install`
 3. Run `npm install && npm run dev`
 4. Run `php artisan migrate`
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
 ## License
 
