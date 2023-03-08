@@ -3,6 +3,8 @@
 <head>
 
     <title>Shipping Booking</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -22,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <main class="position-absolute">
+        <main class="">
             @yield('content')
         </main>
     </div>

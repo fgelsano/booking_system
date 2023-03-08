@@ -4,6 +4,9 @@
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-4 my-5">
+            <div class="text-center">
+                <img src="{{ asset('assets/frontpage/logo.jpeg') }}" alt="" srcset="">
+            </div>
             <div class="card">
                 <div class="card-body login-card-body">
                   <p class="login-box-msg">Sign in to start your session</p>
