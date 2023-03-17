@@ -3,7 +3,7 @@
     @include('layouts.admin.partials._preloader')
     @include('layouts.admin.partials._navbar')
     @include('layouts.admin.partials._sidebar')
-    <div class="content-wrapper">
+    <div class="content-wrapper p-5">
         @yield('content')
     </div>
 </div>
