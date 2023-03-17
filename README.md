@@ -1,4 +1,4 @@
-![The logo of the system](/public/assets/logo/rec/bw-25.png)
+![The logo of the system](/public/assets/logo/rec/clr-50.png)
 
 # Booking System for Shipping Lines
 
