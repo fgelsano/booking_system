@@ -1,3 +1,5 @@
+![The logo of the system](/public/assets/logo/rec/clr-50.png)
+
 # Booking System for Shipping Lines
 
 ## About the System

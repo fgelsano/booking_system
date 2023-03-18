@@ -19,4 +19,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+
+Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
+Route::resource('/dashboard/passengers', 'App\Http\Controllers\PassengersController');
+Route::resource('/dashboard/payments', 'App\Http\Controllers\PaymentsController');
+Route::resource('/dashboard/reports', 'App\Http\Controllers\ReportsController');
+Route::resource('/dashboard/schedules', 'App\Http\Controllers\SchedulesController');
+Route::resource('/dashboard/users', 'App\Http\Controllers\VesselsController');
+
+// Settings Routes
+Route::resource('/dashboard/settings/accomodations', 'App\Http\Controllers\AccomodationsController');
+Route::resource('/dashboard/settings/rates', 'App\Http\Controllers\RatesController');
+Route::resource('/dashboard/settings/vessels', 'App\Http\Controllers\VesselsController');

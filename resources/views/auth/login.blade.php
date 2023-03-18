@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4 my-5">
             <div class="text-center">
-                <img src="{{ asset('assets/frontpage/logo.jpeg') }}" alt="" srcset="">
+                <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
             </div>
             <div class="card">
                 <div class="card-body login-card-body">
