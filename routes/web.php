@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,8 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
 Route::resource('/dashboard/passengers', 'App\Http\Controllers\PassengersController');
 Route::resource('/dashboard/payments', 'App\Http\Controllers\PaymentsController');
+
+
 Route::resource('/dashboard/reports', 'App\Http\Controllers\ReportsController');
 Route::resource('/dashboard/schedules', 'App\Http\Controllers\SchedulesController');
 Route::resource('/dashboard/users', 'App\Http\Controllers\VesselsController');

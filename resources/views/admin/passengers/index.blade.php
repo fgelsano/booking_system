@@ -10,14 +10,14 @@
                             <div class="col-md-6">
                                 Passengers
                             </div>
-                            <div class="col-md-6 text-right">
+                            <div class="col-md-6 text-left">
                                 <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">New Passenger</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card-body">
-                        <table id="users-table" class="table">
+                    <div class="card-body table-responsive">
+                        <table id="users-table" class="table table-bordered table-hover" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -43,6 +43,7 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
+        
         <div class="modal-body">
         </div>
         <div class="modal-footer">
