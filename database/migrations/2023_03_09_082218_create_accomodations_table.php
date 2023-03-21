@@ -16,8 +16,8 @@ class CreateAccomodationsTable extends Migration
         Schema::create('accomodations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fare_id')->unsigned();
-            $table->string('accomodation_name');
-            $table->string('accomodation_type');
+            $table->string('accommodation_name');
+            $table->string('accommodation_type');
             $table->integer('cottage_qy');
             $table->foreign('fare_id')->references('id')->on('fares')->onDelete('cascade');
             $table->timestamps();
