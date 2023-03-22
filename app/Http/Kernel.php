@@ -63,5 +63,18 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'privateURL' => \App\Http\Middleware\PrivateURLsMiddleware::class,
+        'publicURL' => \App\Http\Middleware\PublicURLsMiddleware::class,
+    ];
+
+
+    protected $middlewarePriority = [
+        \App\Http\Middleware\Authenticate::class,
+        \App\Http\Middleware\PublicURLsMiddleware::class,
+        \App\Http\Middleware\PrivateURLsMiddleware::class,
+        \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 }
