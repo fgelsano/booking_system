@@ -27,24 +27,31 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     <style>
-        #date-picker{
-            top: 35%;
+        .datePicker{
+            top: 20%;
             right: 10%;
+            width: 20%;
             display: flex;
-            z-index: 99;
+            z-index: 9;
             background-color: rgba(255,255,255,0.9);
             padding: 2%;
             justify-content: center;
         }
 
-        #date-picker #datepicker .datepicker .datepicker-days{
-            display: flex;
-            justify-content: center;
+        #datepicker{
+            text-transform: uppercase;
+            text-align: center;
         }
 
-        #datepicker {
-            text-transform: uppercase;
-            align-content: center;
+        #datepicker p{
+            color: red;
+        }
+
+        .datePicker form #datepicker .datepicker{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
@@ -100,26 +107,59 @@
             </div>
         </nav>
 
-        <main>
+        <main class="position-relative">
             @yield('content')
         </main>
     </div>
-
     <script>
-        $('#date-picker #datepicker').datepicker({
-            todayBtn: "linked",
-            autoclose: true,
-            todayHighlight: true,
-            beforeShowMonth: function(date){
-                if (date.getMonth() == 8) {
-                    return false;
-                }
-            },
-            beforeShowYear: function(date){
-                if (date.getFullYear() == 2007) {
-                    return false;
-                }
+        $(function() {
+            $('#datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+                startDate: new Date()
+            }).on('changeDate', function(e) {
+                $('#selectedDate').val(e.format('yyyy-mm-dd'));
+            });
+        });
+        
+        
+        // get references to the datepicker and selectedDate input
+        const datepicker = document.querySelector('#datepicker');
+        const selectedDate = document.querySelector('#selectedDate');
+        const datepickerText = document.querySelector('#datepicker-text');
+
+        // set the initial datepicker text to the selected date
+        datepickerText.innerText = new Date(selectedDate.value).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+        // listen for changes to the selectedDate input
+        selectedDate.addEventListener('change', () => {
+            // get the selected date
+            const date = new Date(selectedDate.value);
+
+            // format the date string (e.g. "Mar 17, 2023")
+            const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+            // update the datepicker text
+            datepickerText.innerText = dateString;
+        });
+
+        const firstSelect = document.getElementById('origin');
+        const secondSelect = document.getElementById('destination');
+
+        firstSelect.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+
+        // loop through all options in the second select element
+        for (const option of secondSelect.options) {
+            // disable options that are not the default option and whose value matches the selected value in the first select element
+            if (option.value === selectedValue && option.value !== '0') {
+            option.disabled = true;
+            secondSelect.value = '0';
+            } else {
+            option.disabled = false;
             }
+        }
         });
     </script>
 </body>

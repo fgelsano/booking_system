@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BookingsController extends Controller
 {
@@ -34,7 +35,15 @@ class BookingsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $this->validateData($request);
+
+        if($validator->fails()){
+            return back()
+            ->with('booking-error',$validator->getMessageBag())
+            ->withInput();
+        }
+
+        dd($request); // Replace this with the code with the logic to search availability
     }
 
     /**
@@ -80,5 +89,18 @@ class BookingsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function validateData(Request $request)
+    {
+        return Validator::make($request->all(),[
+            'selected-date' => 'required|date_format:Y-m-d',
+            'origin' => 'required',
+            'destination' => 'required'
+        ],[
+            'selected-date.required' => 'You must select a travel date.',
+            'origin.required' => 'You must select an origin.',
+            'destination.required' => 'You must select a destination.'
+        ]);
     }
 }

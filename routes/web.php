@@ -22,11 +22,12 @@ Route::group(['middleware' => 'publicURL'], function(){
         return view('frontpage');
     });
 
+    Route::post('/dashboard/bookings/', [App\Http\Controllers\BookingsController::class, 'store'])->name('bookings.store');
 });
 
 Route::group(['middleware' => 'privateURL'], function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-    Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
+    // Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
     Route::resource('/dashboard/passengers', 'App\Http\Controllers\PassengersController');
     Route::resource('/dashboard/payments', 'App\Http\Controllers\PaymentsController');
 
