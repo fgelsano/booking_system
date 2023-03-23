@@ -16,12 +16,7 @@
 
                         <div class="input-group mb-3">
                           <!-- <input type="email" class="form-control" placeholder="Email"> -->
-                          <input id="email" type="email" placeholder="Your email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                          <div class="input-group-append">
-                            <div class="input-group-text">
-                              <span class="fas fa-envelope"></span>
-                            </div>
-                          </div>
+                          <input id="email" type="email" placeholder="Your email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ request('email') }}" required autocomplete="email" hidden>
                           @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
