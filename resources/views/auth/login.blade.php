@@ -9,9 +9,6 @@
             </div>
             <div class="card">
                 <div class="card-body login-card-body">
-                  @if (session('auth-error'))
-                      <div class="alert alert-danger">{{ session('auth-error') }}</div>
-                  @endif
                   <p class="login-box-msg">Sign in to start your session</p>
             
                   <form method="POST" action="{{ route('login') }}">
