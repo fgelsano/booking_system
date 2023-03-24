@@ -17,11 +17,6 @@
                         <div class="input-group mb-3">
                           <!-- <input type="email" class="form-control" placeholder="Email"> -->
                           <input id="email" type="email" placeholder="Your email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ request('email') }}" required autocomplete="email" hidden>
-                          @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
                         </div>
                         <div class="input-group mb-3">
                           <!-- <input type="password" class="form-control" placeholder="Password"> -->
@@ -48,10 +43,15 @@
                           
                         </div>
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Reset</button>
-                          </div>
+                          </div>                          
                         </div>
+                        @error('email')
+                          <div class="alert alert-danger mt-3">
+                              {{ $message }}
+                          </div>
+                        @enderror
                     </form>
                 </div>
             </div>
