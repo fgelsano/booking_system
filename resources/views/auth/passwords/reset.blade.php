@@ -5,7 +5,9 @@
     <div class="row justify-content-center my-5">
         <div class="col-md-6 my-5">
             <div class="text-center">
-              <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              <a href="/">
+                <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              </a>
             </div>
             <div class="card my-5">
                 <div class="card-header">{{ __('Reset Password') }}</div>
