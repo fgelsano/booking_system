@@ -10,8 +10,8 @@
                             <div class="col-md-6">
                                 Vessels
                             </div>
-                            <div class="col-md-6 text-left">
-                                <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">New Vessel</a>
+                            <div class="col-md-6 text-right">
+                                <a href="{{ route('vessels.create') }}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#new-vessel">New Vessel</a>
                             </div>
                         </div>
                     </div>
@@ -31,17 +31,26 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="new-vessel" tabindex="-1" role="dialog" aria-labelledby="newVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Adding New Vessel</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         
         <div class="modal-body">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+                <div class="input-group mb-3">
+                  <input id="vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel-name" required autocomplete="name" autofocus>
+                </div>
+                <div class="input-group mb-3">
+                  <input id="capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel-capacity" required autocomplete="name">
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

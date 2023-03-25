@@ -10,7 +10,7 @@
                             <div class="col-md-6">
                                 Passengers
                             </div>
-                            <div class="col-md-6 text-left">
+                            <div class="col-md-6 text-right">
                                 <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">New Passenger</a>
                             </div>
                         </div>

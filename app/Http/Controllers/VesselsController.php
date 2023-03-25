@@ -30,7 +30,7 @@ class VesselsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.settings.vessels.add');
     }
 
     /**
