@@ -65,38 +65,6 @@
         </div>
     </div>
 </div>
-<!-- Edit Rates Modal -->
-<!-- <div class="modal fade" id="rate_modal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Fare</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="editForm" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="name" class="col-form-label">Rates name:</label>
-                        <input type="text" class="form-control" id="fare_name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price" class="col-form-label">Price:</label>
-                        <input type="number" class="form-control" id="price" name="price" required>
-                    </div>
-                    <input type="hidden" name="id" id="id">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -112,23 +80,23 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="fare_name" class="col-form-label">Rates Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="fare_names" name="fare_names" required>
                     </div>
                     <div class="form-group">
                         <label for="price" class="col-form-label">Price:</label>
-                        <input type="number" class="form-control" id="price" name="price" required>
+                        <input type="number" class="form-control" id="prices" name="prices" required>
                     </div>
                     <input type="hidden" name="id" id="id">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="submit" class="btn btn-primary">Update Changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-</div>
+
 
 <script>
     var $j = jQuery.noConflict();
@@ -194,8 +162,11 @@
                 data: form_data,
                 success: function(data) {
                     $('#rates-modal').modal('hide');
-                    table.draw();
                     Toastr.success('Rates added successfully.');
+                    table.draw();
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
                 },
                 error: function(xhr) {
                     var errors = xhr.responseJSON.errors;
@@ -208,103 +179,68 @@
             });
         });
 
-        // Update AJAX
-
-        // $(document).on('click', '.edit', function() {
-        //     var fare_id = $(this).attr('id');
-        //     $.ajax({
-        //         url: "{{ route('rates.edit') }}" + fare_id,
-        //         dataType: "json",
-        //         success: function(data) {
-        //             $('#name').val(data.fare.name);
-        //             $('#price').val(data.fare.price);
-        //             $('#editForm').attr('action', "{{ route('rates.edit') }}" + fare_id);
-        //             $('#editModal').modal('show');
-        //         }
-        //     });
-        // });
-
-        // $('#editForm').on('submit', function(e) {
-        //     e.preventDefault();
-        //     var url = $(this).attr('action');
-        //     $.ajax({
-        //         type: "PUT",
-        //         url: url,
-        //         data: $('#editForm').serialize(),
-        //         success: function(response) {
-        //             toastr.success(response.success);
-        //             $('#rate_modal').modal('hide');
-        //             $('.datatable').DataTable().ajax.reload();
-        //         },
-        //         error: function(response) {
-        //             toastr.error(response.responseJSON.message);
-        //         }
-        //     });
-        // });
-        // Delete Fare
-        // $('body').on('click', '.delete', function() {
-        //     var fare_id = $(this).data("id");
-        //     var url = "{{ route('rates.destroy', ':id') }}";
-        //     url = url.replace(':id', fare_id);
-
-        //     if (confirm("Are you sure you want to delete this fare?")) {
-        //         $.ajax({
-        //             type: "DELETE",
-        //             url: url,
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             success: function(data) {
-        //                 toastr.success('Fare deleted successfully.');
-        //                 table.draw();
-        //             },
-        //             error: function(data) {
-        //                 console.log('Error:', data);
-        //                 toastr.error('Something went wrong, please try again.');
-        //             }
-        //         });
-        //     }
-        // });
-        $('#fares-table').on('click', '.delete', function() {
+        // Edit Fare Modal
+        $('#fares-table').on('click', '.edit', function() {
             var fare_id = $(this).data('id');
-            var delete_url = $(this).data('url');
+            $.get("{{ route('rates.index') }}" + '/' + fare_id + '/edit', function(data) {
+                $('#editForm').attr('action', "{{ url('dashboard/settings/rates') }}/" + fare_id);
+                $('#fare_names').val(data.fare_name);
+                $('#prices').val(data.price);
+                $('#id').val(data.id);
+                $('#editModal').modal('show');
+            });
+        });
 
-            if (confirm('Are you sure you want to delete this Fare?')) {
+        // Update Fare
+        $('#editForm').on('submit', function(e) {
+            e.preventDefault();
+            var fare_id = $('#id').val();
+            var form_data = $(this).serialize();
+            $.ajax({
+                url: "{{ url('dashboard/settings/rates') }}/" + fare_id,
+                type: 'PUT',
+                data: form_data,
+                success: function(data) {
+                    $('#editModal').modal('hide');
+                    toastr.success('Rates Updated successfully.');
+                    table.draw();
+                    location.reload();
+                },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    var error_msg = '';
+                    $.each(errors, function(key, value) {
+                        error_msg += value[0] + '<br>';
+                    });
+                    toastr.error(error_msg, 'Error');
+                }
+            });
+        });
+
+
+        $(document).on('click', '.delete', function() {
+            var url = $(this).data('url');
+            if (confirm('Are you sure you want to delete this rate?')) {
                 $.ajax({
-                    url: delete_url,
+                    url: url,
                     type: 'DELETE',
                     data: {
-                        '_token': '{{ csrf_token() }}',
-                        'id': fare_id
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        toastr.success(data.message);
-                        $('#fare-table').DataTable().ajax.reload();
+                        toastr.success('Rate deleted successfully.');
+                        table.draw();
+                        location.reload();
                     },
-                    error: function(data) {
-                        toastr.error('Error deleting Fare');
+                    error: function(xhr) {
+                        toastr.error('Failed to delete rate.');
                     }
                 });
             }
         });
 
-        // Edit Fare
-        // $('body').on('click', '.edit', function () {
-        //     var fare_id = $(this).data("id");
-        //     var url = "{{ route('rates.edit', ':id') }}";
-        //     url = url.replace(':id', fare_id);
-        //     window.location.href = url;
-        // });
-        $('#fares-table').on('click', '.edit', function() {
-            var fare_id = $(this).data('id');
-            $.get("{{ route('rates.index') }}" + '/' + fare_id + '/edit', function(data) {
-                $('#editForm').attr('action', "{{ route('rates.update', '') }}/" + fare_id);
-                $('#name').val(data.fare_name);
-                $('#price').val(data.price);
-                $('#id').val(data.id);
-                $('#editModal').modal('show');
-            });
-        });
+
+
     });
 </script>
 @endsection

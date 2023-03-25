@@ -23,8 +23,8 @@ class RatesController extends Controller
                 $editUrl = route('rates.edit', $fare->id);
                 $deleteUrl = route('rates.destroy', $fare->id);
 
-                $editButton = '<a href="' . $editUrl . '" class="btn btn-primary btn-sm edit" data-id="' . $fare->id . '">Edit</a>';
-                $deleteButton = '<button type="button" class="btn btn-danger btn-sm delete" data-id="' . $fare->id . '" data-url="' . $deleteUrl . '">Delete</button>';
+                $editButton = '<a href="' . $editUrl . '" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#editModal" data-id="' . $fare->id . '">Edit</a>';
+                $deleteButton = '<button type="button" class="btn btn-danger btn-sm delete" data-url="' . $deleteUrl . '">Delete</button>';
 
                 return $editButton . ' ' . $deleteButton;
             })
@@ -88,8 +88,8 @@ class RatesController extends Controller
      */
     public function edit($id)
     {
-        $fare = Fare::findOrFail($id);
-        return view('rates.edit', compact('fare'));
+        $fare = Fare::find($id);
+        return response()->json($fare);
     }
 
     /**
@@ -101,18 +101,17 @@ class RatesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rates = Fare::find($id);
+        $fare = Fare::find($id);
 
-        if ($rates) {
+        if ($fare) {
             $request->validate([
-                'fare_name' => 'required|string|max:255',
-                'price' => 'required|numeric',
+                'fare_names' => 'required|string|max:255',
+                'prices' => 'required|numeric',
             ]);
 
-            $rates->fare_name = $request->fare_name;
-            $rates->price = $request->price;
-            $rates->save();
-
+            $fare->fare_name = $request->fare_names;
+            $fare->price = $request->prices;
+            $fare->save();
             return response()->json(['success' => 'Rates updated successfully.']);
         } else {
             return response()->json(['error' => 'Rates not found.']);
@@ -125,9 +124,10 @@ class RatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Fare::findOrFail($id)->delete();
-        return response()->json(['success' => 'Fare deleted successfully.']);
+        $fare = Fare::findOrFail($id);
+        $fare->delete();
+        return response()->json(['success' => 'Rates deleted successfully.']);
     }
 }
