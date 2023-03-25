@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vessel;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class VesselsController extends Controller
 {
@@ -11,8 +13,13 @@ class VesselsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Vessel::latest()->get();
+            // dd($data);
+            return DataTables::of($data)->make(true);
+        }
         return view('admin.settings.vessels.index');
     }
 

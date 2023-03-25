@@ -60,7 +60,7 @@
             $j('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '/dashboard/passengers', 
+                ajax: '{{ route('passengers.index') }}', 
                 method: 'get',
                 columns: [
                     {data: 'id', name: 'id'},

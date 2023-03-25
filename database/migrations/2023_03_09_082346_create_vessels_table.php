@@ -15,10 +15,10 @@ class CreateVesselsTable extends Migration
     {
         Schema::create('vessels', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('accomodation_id')->unsigned();
+            // $table->integer('accomodation_id')->unsigned();
             $table->string('vessel_name');
-            $table->integer('cottage_num');
-            $table->foreign('accomodation_id')->references('id')->on('accomodations')->onDelete('cascade');
+            $table->integer('capacity');
+            // $table->foreign('accomodation_id')->references('id')->on('accomodations')->onDelete('cascade');
             $table->timestamps();
         });
     }
