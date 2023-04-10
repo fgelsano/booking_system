@@ -6,6 +6,8 @@ use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Log;
+
 class VesselsController extends Controller
 {
     /**
@@ -41,7 +43,14 @@ class VesselsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $this->validateData($request);
+
+        $vessel = Vessel::create($validateData);
+        return response()->json([
+            'success' => true, 
+            'message' => 'Vessel successfully added',
+            'data' => $vessel
+        ])->header('Content-Type','application/json');
     }
 
     /**
@@ -50,9 +59,14 @@ class VesselsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $vessel = Vessel::find($id);
+            return response()->json(['vessel' => $vessel]);
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -75,7 +89,8 @@ class VesselsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request, $id);
+        $validateData = $this->validateData($request);
     }
 
     /**
@@ -87,5 +102,13 @@ class VesselsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function validateData($request)
+    {
+        return $request->validate([
+            'vessel_name' => 'required|string|max:255',
+            'vessel_capacity' => 'required|max:5',
+        ]);
     }
 }

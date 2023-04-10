@@ -17,7 +17,7 @@ class CreateVesselsTable extends Migration
             $table->increments('id');
             // $table->integer('accomodation_id')->unsigned();
             $table->string('vessel_name');
-            $table->integer('capacity');
+            $table->integer('vessel_capacity');
             // $table->foreign('accomodation_id')->references('id')->on('accomodations')->onDelete('cascade');
             $table->timestamps();
         });
