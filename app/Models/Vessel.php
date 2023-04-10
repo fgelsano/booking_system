@@ -10,9 +10,8 @@ class Vessel extends Model
     use HasFactory;
     protected $table = "vessels";
     protected $fillable = [
-        'accomodation_id',
         'vessel_name',
-        'cottage_num'
+        'vessel_capacity'
     ];
 
     public function accommodation()

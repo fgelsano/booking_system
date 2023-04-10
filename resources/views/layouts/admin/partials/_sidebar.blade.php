@@ -72,7 +72,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-calendar"></i>
               <p>
@@ -99,6 +99,35 @@
                   <p>Vessels</p>
                 </a>
               </li>
+            </ul>
+          </li> --}}
+          <li class="nav-item {{ (request()->is('dashboard/settings/*')) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ (request()->is('dashboard/settings/*')) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-calendar"></i>
+                <p>
+                    Settings
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item {{ Route::currentRouteName() === 'accomodations.index' ? 'active' : '' }}">
+                    <a href="{{ route('accomodations.index') }}" class="nav-link {{ Route::currentRouteName() === 'accomodations.index' ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Accomodations</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Route::currentRouteName() === 'rates.index' ? 'active' : '' }}">
+                    <a href="{{ route('rates.index') }}" class="nav-link {{ Route::currentRouteName() === 'rates.index' ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Rates</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Route::currentRouteName() === 'vessels.index' ? 'active' : '' }}">
+                    <a href="{{ route('vessels.index') }}" class="nav-link {{ Route::currentRouteName() === 'vessels.index' ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Vessels</p>
+                    </a>
+                </li>
             </ul>
           </li>
         </ul>
