@@ -11,6 +11,22 @@
             order: [[3, "asc"]],
             columns: [
                 {
+                    data: 'vessel_img',
+                    name: 'vessel_img',
+                    render: function(data, type, row) {
+                        if(!data){
+                            return 'No Image uploaded';
+                        } elseif (data == 'No Image Uploaded') {
+                            return data;
+                        } else {
+                            return `
+                                <img src="/storage/vessel-images/${data}" class="img-circle elevation-2" width="100px" height="100px">
+                            `;
+                        }
+                        
+                    },
+                },
+                {
                     data: 'vessel_name', 
                     name: 'vessel_name',
                 },
@@ -58,7 +74,7 @@
     $j('#add-vessel-form').submit(function(event) {
         event.preventDefault();
         const formData = new FormData(document.getElementById('add-vessel-form'));
-
+        
         axios.post(event.target.action, formData,{
             headers: {
                 'Accept': 'application/json',

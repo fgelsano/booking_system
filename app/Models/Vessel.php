@@ -11,7 +11,8 @@ class Vessel extends Model
     protected $table = "vessels";
     protected $fillable = [
         'vessel_name',
-        'vessel_capacity'
+        'vessel_capacity',
+        'vessel_img'
     ];
 
     public function accommodation()

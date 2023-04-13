@@ -44,8 +44,27 @@ class VesselsController extends Controller
     public function store(Request $request)
     {
         $validateData = $this->validateData($request);
-
+        // dd($validateData);
+        $vesselImg = $request->file('vessel_img');
+        
+        if($vesselImg){
+            $destinationPath = public_path('storage/vessel-images');;
+            $profileImage = date('YMdHis') . "-" . $vesselImg->getClientOriginalName() . "." . $vesselImg->getClientOriginalExtension();
+            
+            $validateData['vessel_img'] = $profileImage;
+        } else {
+            $validateData['vessel_img'] = 'No Image uploaded';
+        }
+        // dd($validateData);
         $vessel = Vessel::create($validateData);
+        if($vessel){
+            $vesselImg->move($destinationPath, $profileImage);
+        }
+        // $vessel = new Vessel;
+        // $vessel->vessel_name = $input['vessel-name'];
+        // $vessel->vessel_capacity = $input['vessel-capacity'];
+        // $vessel->vessel_img = $input['vessel-img'];
+        // $vessel->save();
         return response()->json([
             'success' => true, 
             'message' => 'Vessel successfully added',
@@ -109,6 +128,7 @@ class VesselsController extends Controller
         return $request->validate([
             'vessel_name' => 'required|string|max:255',
             'vessel_capacity' => 'required|max:5',
+            'vessel_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
     }
 }

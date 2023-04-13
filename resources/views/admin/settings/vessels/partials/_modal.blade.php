@@ -8,14 +8,17 @@
             </button>
         </div>
         
-        <form method="POST" action="{{ route('vessels.store') }}" id="add-vessel-form">
+        <form method="POST" action="{{ route('vessels.store') }}" id="add-vessel-form" enctype="multipart/form-data">
             <div class="modal-body">
                     @csrf
                     <div class="input-group mb-3">
-                        <input id="vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel_name" required autocomplete="name" autofocus>
+                        <input id="add-vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel_name" required autocomplete="name" autofocus>
                     </div>
                     <div class="input-group mb-3">
-                        <input id="capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel_capacity" required autocomplete="name">
+                        <input id="add-vessel-capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel_capacity" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="add-vessel-img" type="file" class="form-control" name="vessel_img" required>
                     </div>
             </div>
             <div class="modal-footer">
@@ -23,11 +26,12 @@
                 <input type="submit" value="Save" class="btn btn-primary">
             </div>
         </form>
+        
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="view-vessel" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="view-vessel" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -39,10 +43,13 @@
             <div class="modal-body">
                     @csrf
                     <div class="input-group mb-3">
-                        <input id="vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel_name" required autocomplete="name" autofocus disabled>
+                        <input id="view-vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel_name" required autocomplete="name" autofocus disabled>
                     </div>
                     <div class="input-group mb-3">
-                        <input id="vessel-capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel_capacity" required autocomplete="name" disabled>
+                        <input id="view-vessel-capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel_capacity" required autocomplete="name" disabled>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="view-img" type="file" class="form-control" name="vessel_capacity" required autocomplete="name" disabled>
                     </div>
             </div>
             <div class="modal-footer">
@@ -58,9 +65,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-<div class="modal fade" id="edit-vessel" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="edit-vessel" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -82,7 +89,7 @@
             </div>
             <div class="modal-footer">
                 {{-- <input type="submit" value="Update" class="btn btn-primary btn-sm"> --}}
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                {{-- <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                     <i class="fa fa-save"></i> Update
                 </button>
 
