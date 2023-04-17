@@ -17,6 +17,7 @@ Another paragraph here
 2. Run `composer install`
 3. Run `npm install && npm run dev`
 4. Run `php artisan migrate`
+5. Run `php artisan storage:link`
 
 ## License
 

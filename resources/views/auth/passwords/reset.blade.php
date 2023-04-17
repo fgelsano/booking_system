@@ -5,7 +5,9 @@
     <div class="row justify-content-center my-5">
         <div class="col-md-6 my-5">
             <div class="text-center">
-              <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              <a href="/">
+                <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              </a>
             </div>
             <div class="card my-5">
                 <div class="card-header">{{ __('Reset Password') }}</div>
@@ -16,17 +18,7 @@
 
                         <div class="input-group mb-3">
                           <!-- <input type="email" class="form-control" placeholder="Email"> -->
-                          <input id="email" type="email" placeholder="Your email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                          <div class="input-group-append">
-                            <div class="input-group-text">
-                              <span class="fas fa-envelope"></span>
-                            </div>
-                          </div>
-                          @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
+                          <input id="email" type="email" placeholder="Your email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ request('email') }}" required autocomplete="email" hidden>
                         </div>
                         <div class="input-group mb-3">
                           <!-- <input type="password" class="form-control" placeholder="Password"> -->
@@ -53,10 +45,15 @@
                           
                         </div>
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Reset</button>
-                          </div>
+                          </div>                          
                         </div>
+                        @error('email')
+                          <div class="alert alert-danger mt-3">
+                              {{ $message }}
+                          </div>
+                        @enderror
                     </form>
                 </div>
             </div>

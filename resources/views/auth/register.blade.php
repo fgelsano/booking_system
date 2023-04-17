@@ -5,9 +5,11 @@
     <div class="row justify-content-center my-5">
         <div class="col-md-6 my-5">
             <div class="text-center">
-              <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              <a href="/">
+                <img src="{{ asset('assets/logo/rec/clr-25.png') }}" alt="" srcset="">
+              </a>
             </div>
-            <div class="card my-5">
+            <div class="card mt-3">
                 <div class="card-header">{{ __('Register') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">

@@ -11,8 +11,12 @@
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 
+    
     <!-- jQuery -->
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+    {{-- Axios --}}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 
     <!-- {{-- toastr --}} -->
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
