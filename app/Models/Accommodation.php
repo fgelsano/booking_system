@@ -8,20 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Accommodation extends Model
 {
     use HasFactory;
-    protected $table = "accomodations";
+    protected $table = "accommodations";
     protected $fillable = [
-        "fare_id",
-        "accomodation_name",
-        "accomodation_type",
+        "vessel_id",
+        "accommodation_name",
+        "image_path",
         "cottage_qy"
     ];
     
     public function vessels()
     {
-        return $this->hasMany(Vessel::class);
+        return $this->belongsTo(Vessel::class);
     }
-    public function fare()
-    {
-        return $this->belongsTo(Fare::class);
-    }
+    // public function fare()
+    // {
+    //     return $this->belongsTo(Fare::class);
+    // }
 }

@@ -6,5 +6,6 @@
     <div class="content-wrapper p-5">
         @yield('content')
     </div>
+    
 </div>
 @include('layouts.admin.partials._footer')

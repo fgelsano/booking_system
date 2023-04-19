@@ -38,7 +38,8 @@ Route::group(['middleware' => 'privateURL'], function(){
     Route::resource('/dashboard/users', 'App\Http\Controllers\VesselsController');
 
     // Settings Routes
-    Route::resource('/dashboard/settings/accomodations', 'App\Http\Controllers\AccomodationsController');
+    
     Route::resource('/dashboard/settings/rates', 'App\Http\Controllers\RatesController');
     Route::resource('/dashboard/settings/vessels', 'App\Http\Controllers\VesselsController');
 });
+Route::resource('/dashboard/settings/accomodations', 'App\Http\Controllers\AccomodationsController');

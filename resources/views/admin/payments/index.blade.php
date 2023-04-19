@@ -48,6 +48,18 @@
             </div>
             <div class="modal-body">
                 <form>
+                <div class="form-group">
+                        <label for="amount">Passenger Name</label>
+                        <input type="text" class="form-control" id="passenger" name="passenger">
+                    </div>
+                <div class="form-group">
+                        <label for="amount">Booking Number</label>
+                        <input type="text" class="form-control" id="booking" name="booking">
+                    </div>
+                <div class="form-group">
+                        <label for="amount">Discount Type</label>
+                        <input type="text" class="form-control" id="discount" name="discount">
+                    </div>
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input type="text" class="form-control" id="amount" name="amount">
@@ -123,16 +135,9 @@
                     searchable: false
                 }
             ],
-            // "columnDefs": [{
-            //     "targets": [3, 4],
-            //     "render": function(data, type, row) {
-            //         if (type === 'display' || type === 'filter') {
-            //             return moment.utc(data).local().format('MMM DD, YYYY h:mm A');
-            //         } else {
-            //             return data;
-            //         }
-            //     }
-            // }]
+            "createdRow": function(row, data, index) {
+                $('td', row).css('text-align', 'center');
+            },
         });
     });
 </script>

@@ -16,7 +16,7 @@
                     render: function(data, type, row) {
                         if(!data){
                             return 'No Image uploaded';
-                        } elseif (data == 'No Image Uploaded') {
+                        } else if (data == 'No Image Uploaded') {
                             return data;
                         } else {
                             return `

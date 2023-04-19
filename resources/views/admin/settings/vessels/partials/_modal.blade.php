@@ -31,7 +31,7 @@
     </div>
 </div>
 
-{{-- <div class="modal fade" id="view-vessel" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
+<div class="modal fade" id="view-vessel" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -65,9 +65,9 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div> 
 
-{{-- <div class="modal fade" id="edit-vessel" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
+<div class="modal fade" id="edit-vessel" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -88,11 +88,10 @@
                     </div>
             </div>
             <div class="modal-footer">
-                {{-- <input type="submit" value="Update" class="btn btn-primary btn-sm"> --}}
-                {{-- <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                <input type="submit" value="Update" class="btn btn-primary btn-sm"> 
+              <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                     <i class="fa fa-save"></i> Update
                 </button>
-
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
                     <i class="fa fa-times"></i> Close
                 </button>

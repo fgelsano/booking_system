@@ -14,8 +14,8 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->bigInteger('user_id')->unsigned();
+            $table->id();
+            // $table->bigInteger('user_id')->unsigned();
             $table->string('firstname');
             $table->string('lastname');
             $table->integer('age');
@@ -23,7 +23,7 @@ class CreateProfilesTable extends Migration
             $table->string('contact');
             $table->string('email')->unique();
             $table->string('password');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
