@@ -27,8 +27,7 @@ Route::group(['middleware' => 'publicURL'], function(){
 
 Route::group(['middleware' => 'privateURL'], function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/bookings', [App\Http\Controllers\BookingsController::class, 'index'])->name('bookings.index');
-    // Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
+    Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
     Route::resource('/dashboard/passengers', 'App\Http\Controllers\PassengersController');
     Route::resource('/dashboard/payments', 'App\Http\Controllers\PaymentsController');
 

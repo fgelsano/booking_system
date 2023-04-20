@@ -10,7 +10,7 @@
                         <div class="col-md-6">
                             Payments
                         </div>
-                        <div class="col-md-6 text-left">
+                        <div class="col-md-6 text-right">
                             <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">New Payments</a>
                         </div>
                     </div>
@@ -48,6 +48,18 @@
             </div>
             <div class="modal-body">
                 <form>
+                <div class="form-group">
+                        <label for="amount">Passenger Name</label>
+                        <input type="text" class="form-control" id="amount" name="amount">
+                    </div>
+                <div class="form-group">
+                        <label for="amount">Booking Number</label>
+                        <input type="text" class="form-control" id="amount" name="amount">
+                    </div>
+                <div class="form-group">
+                        <label for="amount">Discount Type</label>
+                        <input type="text" class="form-control" id="amount" name="amount">
+                    </div>
                     <div class="form-group">
                         <label for="amount">Amount</label>
                         <input type="text" class="form-control" id="amount" name="amount">
@@ -65,24 +77,6 @@
         </div>
     </div>
 </div>
-<!-- <script>
-    $(function() {
-    $('#payments-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '/dashboard/payments', 
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'profile_id', name: 'profile_id' },
-            { data: 'booking_id', name: 'booking_id' },
-            { data: 'discount_id', name: 'discount_id' },
-            { data: 'amount', name: 'amount' },
-            { data: 'status', name: 'status' },
-            { data: 'action', name: 'action', orderable: false, searchable: false },
-        ]
-    });
-});
-</script> -->
 
 <script>
     var $j = jQuery.noConflict();
@@ -92,7 +86,8 @@
             serverSide: true,
             ajax: '/dashboard/payments',
             method: 'get',
-            columns: [{
+            columns: [
+                {
                     data: 'id',
                     name: 'id'
                 },
@@ -101,12 +96,20 @@
                     name: 'profile_id'
                 },
                 {
-                    data: 'booking_id',
-                    name: 'booking_id'
+                    data: 'booking_id.id',
+                    name: 'booking_id.id'
                 },
                 {
                     data: 'discount_id',
                     name: 'discount_id'
+                },
+                {
+                    data: 'booking_id.origin',
+                    name: 'booking_id.origin'
+                },
+                {
+                    data: 'booking_id.destination',
+                    name: 'booking_id.destination'
                 },
                 {
                     data: 'amount',
@@ -117,12 +120,16 @@
                     name: 'status'
                 },
                 {
-                    data: 'action', 
-                    name: 'action', 
-                    orderable: false, 
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
                     searchable: false
                 }
+
             ],
+            "createdRow": function(row, data, index) {
+                $('td', row).css('text-align', 'center');
+            },
             // "columnDefs": [{
             //     "targets": [3, 4],
             //     "render": function(data, type, row) {
