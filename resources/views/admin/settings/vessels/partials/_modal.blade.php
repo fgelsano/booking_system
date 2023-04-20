@@ -31,7 +31,7 @@
     </div>
 </div>
 
-{{-- <div class="modal fade" id="view-vessel" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
+<div class="modal fade" id="view-vessel-modal" tabindex="-1" role="dialog" aria-labelledby="viewVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -41,16 +41,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input id="view-vessel-name" type="text" placeholder="Vessel name" class="form-control" name="vessel_name" required autocomplete="name" autofocus disabled>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input id="view-vessel-capacity" type="number" placeholder="Vessel capacity" class="form-control" name="vessel_capacity" required autocomplete="name" disabled>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input id="view-img" type="file" class="form-control" name="vessel_capacity" required autocomplete="name" disabled>
-                    </div>
+                    <div class="vessel-img">
+                        <div class="card card-widget widget-user">
+                            <!-- Add the bg color to the header using any of the bg-* classes -->
+                            <div class="widget-user-header text-white" id="view-vessel-img"></div>
+                            <div class="card-footer bg-white">
+                              <div class="row">
+                                <div class="col-sm-6 border-right">
+                                  <div class="description-block">
+                                    <h5 class="description-header" id="view-vessel-name">Vessel Name</h5>
+                                    <span class="description-text">Name</span>
+                                  </div>
+                                  <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-6">
+                                  <div class="description-block">
+                                    <h5 class="description-header" id="view-vessel-capacity">#</h5>
+                                    <span class="description-text">Capacity</span>
+                                  </div>
+                                  <!-- /.description-block -->
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                              <!-- /.row -->
+                            </div>
+                        </div>
+                    </div>                    
             </div>
             <div class="modal-footer">
                 <a href="" data-id="${data['id']}" class="btn btn-primary btn-sm">
@@ -65,9 +82,9 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 
-{{-- <div class="modal fade" id="edit-vessel" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
+<div class="modal fade" id="edit-vessel-modal" tabindex="-1" role="dialog" aria-labelledby="editVesselLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -88,8 +105,8 @@
                     </div>
             </div>
             <div class="modal-footer">
-                {{-- <input type="submit" value="Update" class="btn btn-primary btn-sm"> --}}
-                {{-- <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
+                <input type="submit" value="Update" class="btn btn-primary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                     <i class="fa fa-save"></i> Update
                 </button>
 

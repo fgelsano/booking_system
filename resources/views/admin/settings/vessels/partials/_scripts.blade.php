@@ -16,8 +16,6 @@
                     render: function(data, type, row) {
                         if(!data){
                             return 'No Image uploaded';
-                        } elseif (data == 'No Image Uploaded') {
-                            return data;
                         } else {
                             return `
                                 <img src="/storage/vessel-images/${data}" class="img-circle elevation-2" width="100px" height="100px">
@@ -44,10 +42,10 @@
                     render: function(data, type, row) {
                         return `
                             <div class="btn-group">
-                                <button data-id="${data['id']}" data-action="view" class="btn btn-info btn-sm vessel-model-btn">
+                                <button data-id="${data['id']}" data-action="view" class="btn btn-info btn-sm btn-vessel-modal" data-toggle="modal" data-target="#view-vessel-modal">
                                     <i class="fa fa-eye"></i> View
                                 </button>
-                                <button data-id="${data['id']}" data-action="edit" class="btn btn-primary btn-sm vessel-model-btn">
+                                <button data-id="${data['id']}" data-action="edit" class="btn btn-primary btn-sm btn-vessel-modal" data-toggle="modal" data-target="#edit-vessel-modal">
                                     <i class="fa fa-edit"></i> Edit
                                 </button>
                                 <button type="button" class="btn btn-danger btn-sm delete-vessel" data-id="${data['id']}">
@@ -94,21 +92,34 @@
         });
     });
 
-    $j(document).on('click','.vessel-model-btn', function (event) {
+    $j(document).on('click','.btn-vessel-modal', function (event) {
         var button = $j(this); 
         var vesselId = button.data('id');
         var action = button.data('action');
-
-        $j('#'+action+'-vessel').modal('show');
-        var modal = $j('#'+action+'-vessel');
-        
+        var modal = $j('#view-vessel-modal');
         $j.ajax({
             url: "{{ route('vessels.show', ':vesselId') }}".replace(':vesselId', vesselId),
             method: 'GET',
             success: function(data) {
-                modal.find('#vessel-name').val(data.vessel.vessel_name);
-                modal.find('#vessel-capacity').val(data.vessel.vessel_capacity);
-                modal.attr('data-id').val(data.vessel.id);
+                var baseUrl = window.location.origin;
+                modal.find('#view-vessel-name').text(data.vessel.vessel_name);
+                modal.find('#view-vessel-capacity').text(data.vessel.vessel_capacity);
+                
+                var rawImg = data.vessel.vessel_img;
+                console.log(rawImg);
+                if(rawImg == 'No Image Uploaded' || rawImg == ''){
+                    modal.find('#view-vessel-img').css({
+                        'background': 'url(' +baseUrl+'/storage/no-image-uploaded.webp'+ ') center center',
+                        'background-size': 'cover'
+                    });
+                } else {
+                    var vesselImg = baseUrl+'/storage/vessel-images/'+data.vessel.vessel_img;
+                    modal.find('#view-vessel-img').css({
+                        'background': 'url(' +vesselImg+ ') center center',
+                        'background-size': 'cover'
+                    });
+                }                
+                
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // Handle the error
