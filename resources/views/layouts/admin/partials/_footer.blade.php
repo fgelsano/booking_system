@@ -38,6 +38,8 @@
 <!-- Sweet Alert -->
 <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- Dropify -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
 </body>
 
 </html>

@@ -153,7 +153,7 @@
 </div> -->
 
 <!-- Add Modal With Image -->
-<div class="modal fade" id="addAccommodationModal" tabindex="-1" role="dialog" aria-labelledby="addAccommodationModalLabel" aria-hidden="true">
+<div class="modal fade add" id="addAccommodationModal" tabindex="-1" role="dialog" aria-labelledby="addAccommodationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -176,7 +176,7 @@
                         <input type="text" class="form-control" id="add-accommodation-name" name="accommodation_name" required />
                     </div>
                     <div class="form-group">
-                        <input id="add-accommodation-img" type="file" class="form-control" name="image_path" required>
+                        <input id="add-accommodation-img" type="file" class="form-control dropify" name="image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false" required>
                     </div>
                     <div class="form-group">
                         <label for="cottage_qy" class="control-label">Cottage Quantity:</label>
@@ -281,16 +281,15 @@
                     </div>
                     <div class="form-group">
                         <label for="accommodation_name">Accommodation Name</label>
-                        <input type="text" class="form-control" name="edit_accommodation_name" id="edit-accommodation_name">
+                        <input type="text" class="form-control" name="edit_accommodation_name" id="edit-accommodation-name">
                     </div>
                     <div class="form-group">
                         <label for="image_path">Accommodation Image</label>
-                        <input id="edit-accommodation-img" type="file" class="form-control" name="edit_image_path" required>
-                        <img id="edit-image-preview" src="" alt="Accommodation Image" style="display:none">
+                        <input id="edit-accommodation-img" type="file" class="form-control dropify" name="edit_image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false">
                     </div>
                     <div class="form-group">
                         <label for="cottage_qy">Cottage Quantity</label>
-                        <input type="number" class="form-control" name="edit_cottage_qy" id="edit-cottage_qy">
+                        <input type="number" class="form-control" name="edit_cottage_qy" id="edit-cottage-qy">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -304,6 +303,7 @@
 <script>
     var $j = jQuery.noConflict();
     $j(document).ready(function() {
+        $('.dropify').dropify();
         var dttb = $j('#accommodations-table').DataTable({
             processing: true,
             serverSide: true,
@@ -370,10 +370,12 @@
                 console.log(xhr.responseText);
             }
         });
+        
 
         $j('#accommodationForm').submit(function(event) {
             event.preventDefault();
             const formData = new FormData(document.getElementById('accommodationForm'));
+            $('.dropify').dropify();
             axios.post(event.target.action, formData, {
                     headers: {
                         'Accept': 'application/json',
@@ -398,6 +400,7 @@
         });
 
         $('#accommodations-table').on('click', '.edit', function() {
+            $('.dropify').dropify();
             var accommodation_id = $j(this).data('id');
             $.get("/dashboard/settings/accomodations/" + accommodation_id + "/edit", function(data) {
 
@@ -418,7 +421,6 @@
                 $('input[name=edit_cottage_qy]').val(data.accommodation.cottage_qy);
                 $('input[name="accommodation_id"]').val(data.accommodation.id);
                 $('#edit-accommodation-modal').modal('show');
-
             });
         });
         $('#edit-accommodation-img').on('change', function(e) {
@@ -666,10 +668,6 @@
         //         }
         //     });
         // });
-
-
-
-
 
         //Delete Function
         // $(document).on('click', '.delete', function() {
