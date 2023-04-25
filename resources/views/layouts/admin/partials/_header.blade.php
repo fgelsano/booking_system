@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sea Vessel Booking</title>
@@ -9,6 +10,8 @@
     <!-- DataTables JS -->
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+
     
     <!-- jQuery -->
     <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -47,7 +50,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="path/to/sweetalert2.min.css">
-
+    <!-- Dropify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">

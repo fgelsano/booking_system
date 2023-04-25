@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\toastr;
 
 class RegisterController extends Controller
 {
@@ -69,5 +71,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    protected function registered(Request $request, $user)
+    {
+        toastr()->success('Welcome, ' . $user->name . '! You have successfully registered.');
+        return redirect($this->redirectPath());
     }
 }

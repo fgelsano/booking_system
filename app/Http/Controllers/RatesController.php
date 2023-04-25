@@ -41,6 +41,7 @@ class RatesController extends Controller
     public function create()
     {
         return view('dashboard.settings.rates.create');
+        return view('dashboard.settings.rates.create');
     }
 
     /**
@@ -51,6 +52,21 @@ class RatesController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'fare_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        $rates = Fare::create([
+            'fare_name' => $request->fare_name,
+            'price' => $request->price,
+        ]);
+
+        if ($rates) {
+            return response()->json(['success' => 'Rates added successfully.']);
+        } else {
+            return response()->json(['error' => 'Failed to add rates.']);
+        }
         $request->validate([
             'fare_name' => 'required|string|max:255',
             'price' => 'required|numeric',
@@ -93,6 +109,8 @@ class RatesController extends Controller
     {
         $fare = Fare::find($id);
         return response()->json($fare);
+        $fare = Fare::find($id);
+        return response()->json($fare);
     }
 
     /**
@@ -104,6 +122,21 @@ class RatesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $fare = Fare::find($id);
+
+        if ($fare) {
+            $request->validate([
+                'fare_names' => 'required|string|max:255',
+                'prices' => 'required|numeric',
+            ]);
+
+            $fare->fare_name = $request->fare_names;
+            $fare->price = $request->prices;
+            $fare->save();
+            return response()->json(['success' => 'Rates updated successfully.']);
+        } else {
+            return response()->json(['error' => 'Rates not found.']);
+        }
         $fare = Fare::find($id);
 
         if ($fare) {

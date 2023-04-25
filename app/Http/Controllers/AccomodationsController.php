@@ -141,9 +141,17 @@ class AccomodationsController extends Controller
      */
     public function show($id)
     {
-        $accommodation = Accommodation::findOrFail($id);
-        $vessels = $accommodation->vessels;
-        return response()->json(['data' => $accommodation, 'vessels' => $vessels])->header('Content-Type', 'application/json');
+        $accommodation = DB::table('accommodations')
+            ->join('vessels', 'vessels.id', '=', 'accommodations.vessel_id')
+            ->select('accommodations.*', 'vessels.vessel_name')
+            ->where('accommodations.id', $id)
+            ->first();
+
+        if ($accommodation) {
+            return response()->json(['success' => true, 'data' => $accommodation], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Accommodation not found'], 404);
+        }
     }
 
     /**
@@ -160,11 +168,19 @@ class AccomodationsController extends Controller
         //     'accommodation' => $accommodation,
         //     'fares' => $fares
         // ]);
-        $accommodation = Accommodation::find($id);
-        $vessels = Vessel::all();
+        // $accommodation = Accommodation::find($id);
+        // $vessels = Vessel::all();
+        $accommodation = DB::table('accommodations')
+            ->join('vessels', 'vessels.id', '=', 'accommodations.vessel_id')
+            ->select('accommodations.*', 'vessels.vessel_name')
+            ->where('accommodations.id', $id)
+            ->first();
+
+        $image_url = $accommodation->image_path ? asset('storage/accommodation-images/' . $accommodation->image_path) : null;
+
         return response()->json([
             'accommodation' => $accommodation,
-            'vessels' => $vessels
+            'image_url' => $image_url
         ]);
     }
 
@@ -198,61 +214,61 @@ class AccomodationsController extends Controller
 
         // return response()->json(['success' => 'Accommodation updated successfully.']);
 
-    //     $accommodation = Accommodation::find($id);
-    //     $accommodation->vessel_id = $request->input('vessel_id');
-    //     $accommodation->accommodation_name = $request->input('accommodation_name');
-    //     $accommodationImg = $request->file('image_path');
-    //     $accommodation->cottage_qy = $request->input('cottage_qy');
+        //     $accommodation = Accommodation::find($id);
+        //     $accommodation->vessel_id = $request->input('vessel_id');
+        //     $accommodation->accommodation_name = $request->input('accommodation_name');
+        //     $accommodationImg = $request->file('image_path');
+        //     $accommodation->cottage_qy = $request->input('cottage_qy');
 
-    //     if ($accommodationImg) {
-    //         $destinationPath = public_path('storage/accommodation-images');;
-    //         $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
-    //         $accommodation->image_path = $profileImage;
-    //         $accommodationImg->move($destinationPath, $profileImage);
-    //     }
+        //     if ($accommodationImg) {
+        //         $destinationPath = public_path('storage/accommodation-images');;
+        //         $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
+        //         $accommodation->image_path = $profileImage;
+        //         $accommodationImg->move($destinationPath, $profileImage);
+        //     }
 
-    //     $accommodation->save();
+        //     $accommodation->save();
 
-    //     return response()->json([
-    //         'success' => true,
-    //         'message' => 'Accommodation successfully updated',
-    //         'data' => $accommodation
-    //     ])->header('Content-Type', 'application/json');
-    // }
-    
-    $validateData = $this->validateDataAccommodation($request);
-    $accommodation = Accommodation::findOrFail($id);
-    $accommodationImg = $request->file('image_path');
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'Accommodation successfully updated',
+        //         'data' => $accommodation
+        //     ])->header('Content-Type', 'application/json');
+        // }
 
-    if ($accommodationImg) {
-        $destinationPath = public_path('storage/accommodation-images');
-        $oldImage = $accommodation->image_path;
+        $validateData = $this->validateDataAccommodation($request);
+        $accommodation = Accommodation::findOrFail($id);
+        $accommodationImg = $request->file('image_path');
 
-        if ($oldImage !== "No Image uploaded") {
-            $imagePath = $destinationPath . '/' . $oldImage;
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+        if ($accommodationImg) {
+            $destinationPath = public_path('storage/accommodation-images');
+            $oldImage = $accommodation->image_path;
+
+            if ($oldImage !== "No Image uploaded") {
+                $imagePath = $destinationPath . '/' . $oldImage;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
             }
+
+            $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
+            $validateData['image_path'] = $profileImage;
+            $accommodationImg->move($destinationPath, $profileImage);
         }
 
-        $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
-        $validateData['image_path'] = $profileImage;
-        $accommodationImg->move($destinationPath, $profileImage);
-    }
+        $accommodation->update($validateData);
 
-    $accommodation->update($validateData);
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Accommodation updated successfully.',
-        'data' => $accommodation
-    ])->header('Content-Type', 'application/json');
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+        return response()->json([
+            'success' => true,
+            'message' => 'Accommodation updated successfully.',
+            'data' => $accommodation
+        ])->header('Content-Type', 'application/json');
+        /**
+         * Remove the specified resource from storage.
+         *
+         * @param  int  $id
+         * @return \Illuminate\Http\Response
+         */
     }
     public function destroy(Request $request, $id)
     {
