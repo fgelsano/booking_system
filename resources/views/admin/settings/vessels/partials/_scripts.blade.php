@@ -16,6 +16,8 @@
                     render: function(data, type, row) {
                         if(!data){
                             return 'No Image uploaded';
+                        } else if (data == 'No Image Uploaded') {
+                            return data;
                         } else {
                             return `
                                 <img src="/storage/vessel-images/${data}" class="img-circle elevation-2" width="100px" height="100px">
@@ -104,7 +106,6 @@
                 var baseUrl = window.location.origin;
                 modal.find('#view-vessel-name').text(data.vessel.vessel_name);
                 modal.find('#view-vessel-capacity').text(data.vessel.vessel_capacity);
-                
                 var rawImg = data.vessel.vessel_img;
                 console.log(rawImg);
                 if(rawImg == 'No Image Uploaded' || rawImg == ''){
@@ -119,7 +120,6 @@
                         'background-size': 'cover'
                     });
                 }                
-                
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // Handle the error

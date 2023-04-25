@@ -14,7 +14,7 @@ class CreateDicountsTable extends Migration
     public function up()
     {
         Schema::create('dicounts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('discount_name');
             $table->string('discount_type');
             $table->double('price');

@@ -17,6 +17,6 @@ class Vessel extends Model
 
     public function accommodation()
     {
-        return $this->belongsTo(Accommodation::class);
+        return $this->hasMany(Accommodation::class);
     }
 }

@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\toastr;
 
 
-
 class LoginController extends Controller
 {
     /*
@@ -48,12 +47,12 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        toastr()->success('Successfully Log out');
+        // toastr()->success('Successfully Log out');
         return redirect('/login');
     }
     protected function authenticated(Request $request, $user)
     {
-        toastr()->success('Welcome back, ' . $user->name);
+        // toastr()->success('Welcome back, ' . $user->name);
         return redirect()->intended($this->redirectPath());
     }
 }

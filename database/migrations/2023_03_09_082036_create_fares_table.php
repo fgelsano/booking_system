@@ -14,7 +14,7 @@ class CreateFaresTable extends Migration
     public function up()
     {
         Schema::create('fares', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('fare_name');
             $table->double('price');
             $table->timestamps();

@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sea Vessel Booking</title>
+    <link rel="stylesheet" href="{{asset('assets/datatables.css')}}">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico')}}">
     <!-- DataTables JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 
@@ -17,17 +18,19 @@
     {{-- Axios --}}
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+    
 
     <!-- {{-- toastr --}} -->
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     
 
-
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-ZJgsNjLZ6Q2R6YH44EsLYwox1OgOaUh9R0KsTZN97oO+T7h1f+bwLrZarVLtF++xSC0dP8oJhDzOu2+WRPZ7Bw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
@@ -45,7 +48,15 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Sweet Alert -->
+    <link rel="stylesheet" href="path/to/sweetalert2.min.css">
+    <!-- Dropify -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    </head>
 
+    <body class="hold-transition sidebar-mini layout-fixed">
+    
+    
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+    

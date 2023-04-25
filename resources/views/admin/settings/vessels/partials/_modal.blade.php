@@ -109,7 +109,6 @@
                 <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">
                     <i class="fa fa-save"></i> Update
                 </button>
-
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
                     <i class="fa fa-times"></i> Close
                 </button>
