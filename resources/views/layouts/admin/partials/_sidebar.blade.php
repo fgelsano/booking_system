@@ -87,6 +87,13 @@
                   <p>Accomodations</p>
                 </a>
               </li>
+              <li class="nav-item {{ Route::currentRouteName() === 'ports.index' ? 'active' : '' }}">
+                <a href="{{ route('ports.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ports</p>
+                </a>
+              </li>
+  
               <li class="nav-item {{ Route::currentRouteName() === 'rates.index' ? 'active' : '' }}">
                 <a href="{{ route('rates.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -114,6 +121,12 @@
                     <a href="{{ route('accomodations.index') }}" class="nav-link {{ Route::currentRouteName() === 'accomodations.index' ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Accomodations</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Route::currentRouteName() === 'ports.index' ? 'active' : '' }}">
+                    <a href="{{ route('ports.index') }}" class="nav-link {{ Route::currentRouteName() === 'ports.index' ? 'active' : '' }}">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Ports</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Route::currentRouteName() === 'rates.index' ? 'active' : '' }}">
