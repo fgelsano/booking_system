@@ -57,6 +57,7 @@
                         `;
                     },
                     "className":"text-center",
+                    
                 },
                 {
                     data: 'created_at',
@@ -94,7 +95,7 @@
         });
     });
 
-    $j(document).on('click','.btn-vessel-modal', function (event) {
+    $j(document).on('click','vessel-model.-btn', function (event) {
         var button = $j(this); 
         var vesselId = button.data('id');
         var action = button.data('action');

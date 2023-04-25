@@ -47,11 +47,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Sweet Alert -->
-    <link rel="stylesheet" href="path/to/sweetalert2.min.css">
-    <!-- Dropify -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
+    
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">
