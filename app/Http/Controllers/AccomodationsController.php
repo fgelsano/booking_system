@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Accommodation;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Models\Vessel;
 
 class AccomodationsController extends Controller
 {
@@ -52,7 +53,7 @@ class AccomodationsController extends Controller
         $accommodations = DB::table('accommodations')
             ->join('vessels', 'accommodations.vessel_id', '=', 'vessels.id')
             ->select('accommodations.*', 'vessels.vessel_name')
-            ->get();
+            ->first();
         return response()->json(['data' => $accommodations]);
     }
 
@@ -115,6 +116,14 @@ class AccomodationsController extends Controller
      */
     public function edit($id)
     {
+        // $accommodation = Accommodation::find($id);
+        // $fares = Fare::all();
+        // return response()->json([
+        //     'accommodation' => $accommodation,
+        //     'fares' => $fares
+        // ]);
+        // $accommodation = Accommodation::find($id);
+        $vessels = Vessel::all();
         $accommodation = DB::table('accommodations')
             ->join('vessels', 'vessels.id', '=', 'accommodations.vessel_id')
             ->select('accommodations.*', 'vessels.vessel_name')
@@ -125,6 +134,7 @@ class AccomodationsController extends Controller
 
         return response()->json([
             'accommodation' => $accommodation,
+            'vessels' => $vessels,
             'image_url' => $image_url
         ]);
     }
@@ -145,7 +155,7 @@ class AccomodationsController extends Controller
         if ($accommodationImg) {
             $destinationPath = public_path('storage/accommodation-images');
             $oldImage = $accommodation->image_path;
-
+            
             if ($oldImage !== "No Image uploaded") {
                 $imagePath = $destinationPath . '/' . $oldImage;
                 if (file_exists($imagePath)) {
