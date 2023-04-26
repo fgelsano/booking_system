@@ -91,6 +91,7 @@
                         <p>Rates</p>
                     </a>
                 </li>
+              
                 <li class="nav-item {{ Route::currentRouteName() === 'vessels.index' ? 'active' : '' }}">
                     <a href="{{ route('vessels.index') }}" class="nav-link {{ Route::currentRouteName() === 'vessels.index' ? 'active' : '' }}">
                         <i class="far fa-circle nav-icon"></i>

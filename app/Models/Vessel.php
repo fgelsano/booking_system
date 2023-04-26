@@ -19,4 +19,5 @@ class Vessel extends Model
     {
         return $this->hasMany(Accommodation::class);
     }
+    
 }

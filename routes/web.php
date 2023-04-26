@@ -44,6 +44,16 @@ Route::group(['middleware' => 'privateURL'], function(){
     Route::resource('/dashboard/settings/vessels', 'App\Http\Controllers\VesselsController');
     Route::resource('/dashboard/settings/ports', 'App\Http\Controllers\PortsController');
     Route::resource('/dashboard/settings/accomodations', 'App\Http\Controllers\AccomodationsController');
-    Route::resource('/dashboard/settings/schedules', 'App\Http\Controllers\SchedulesController'); 
+    Route::resource('/dashboard/settings/schedules', 'App\Http\Controllers\SchedulesController');
+  
+    
+    //Schedules Routes
+    // Route::get('fullcalender', [App\Http\Controllers\FullCalenderController::class, 'index']);
+    // Route::post('fullcalenderAjax', [App\Http\Controllers\FullCalenderController::class, 'ajax']);
+    // Route::get('/dashboard/settings/schedules',[App\Http\Controllers\SchedulesController::class, 'create'])->name('schedules.add');
+
+
+
+   
 
 });
