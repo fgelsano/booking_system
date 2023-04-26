@@ -65,21 +65,16 @@
             dataType: "json",
             success: function(data) {
                 var options = "<option value=''>-- Select Vessel --</option>";
-                $.each(data.vessels, function(key, vessels) {
-                    options += "<option value='" + vessels.vessel_id + "'>" + vessels.vessel_name + "</option>";
-
+                $.each(data.data, function(key, value) {
+                    options += "<option value='" + value.vessels.vessel_id + "'>" + value.vessels.vessel_name + "</option>";
                 });
                 $("#add-vessel-id").html(options);
-                console.log(data.accommodations);
-                console.log(data.data);
-                console.log(data.vessles);
-                console.log(data);
+
             },
             error: function(xhr) {
                 console.log(xhr.responseText);
             }
         });
-
         $j('#accommodationForm').submit(function(event) {
             event.preventDefault();
             const formData = new FormData(document.getElementById('accommodationForm'));
