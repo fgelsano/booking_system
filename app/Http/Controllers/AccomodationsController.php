@@ -50,11 +50,15 @@ class AccomodationsController extends Controller
      */
     public function create()
     {
+        $vessels = Vessel::all();
         $accommodations = DB::table('accommodations')
             ->join('vessels', 'accommodations.vessel_id', '=', 'vessels.id')
             ->select('accommodations.*', 'vessels.vessel_name')
             ->first();
-        return response()->json(['data' => $accommodations]);
+        return response()->json([
+            'data' => $accommodations,
+            'vessels' => $vessels
+        ]);
     }
 
     /**

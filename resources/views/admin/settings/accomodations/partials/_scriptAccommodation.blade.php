@@ -64,12 +64,16 @@
             type: "GET",
             dataType: "json",
             success: function(data) {
-
                 var options = "<option value=''>-- Select Vessel --</option>";
-                $.each(data.data, function(key, value) {
-                    options += "<option value='" + value.vessel_id + "'>" + value.vessel_name + "</option>";
+                $.each(data.vessels, function(key, vessels) {
+                    options += "<option value='" + vessels.vessel_id + "'>" + vessels.vessel_name + "</option>";
+
                 });
                 $("#add-vessel-id").html(options);
+                console.log(data.accommodations);
+                console.log(data.data);
+                console.log(data.vessles);
+                console.log(data);
             },
             error: function(xhr) {
                 console.log(xhr.responseText);
@@ -103,7 +107,13 @@
         });
 
         $('#accommodations-table').on('click', '.edit', function() {
-            $('.dropify').dropify();
+            $('.dropify').dropify({
+                messages: {
+                    default: ''
+                },
+                height: 300,
+                width: 300
+            });
             var accommodation_id = $(this).data('id');
             $.ajax({
                 url: "/dashboard/settings/accomodations/" + accommodation_id + "/edit",
