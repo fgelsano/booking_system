@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{asset('assets/datatables.css')}}">
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico')}}">
     <!-- DataTables JS -->
-    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
 
@@ -47,7 +47,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
-    
+    <!-- Dropify -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">
     </head>
 
     <body class="hold-transition sidebar-mini layout-fixed">

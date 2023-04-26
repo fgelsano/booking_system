@@ -22,7 +22,7 @@
                         <input type="text" class="form-control" id="add-accommodation-name" name="accommodation_name" required />
                     </div>
                     <div class="form-group">
-                        <input id="add-accommodation-img" type="file" class="form-control dropify" name="image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false">
+                        <input id="add-accommodation-img" type="file" class="form-control dropify" name="image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false"  style="width: 300px">
                     </div>
                     <div class="form-group">
                         <label for="cottage_qy" class="control-label">Cottage Quantity:</label>
@@ -96,8 +96,7 @@
                     <input type="hidden" name="accommodation_id" id="accommodation_id">
                     <div class="form-group">
                         <label for="vessel_id">Vessels</label>
-                        <select class="form-control" name="edit_vessel_id" id="edit-vessel-id">
-                        </select>
+                        <select class="form-control" name="edit_vessel_id" id="edit-vessel-id"></select>
                     </div>
                     <div class="form-group">
                         <label for="accommodation_name">Accommodation Name</label>
@@ -105,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image_path">Accommodation Image</label>
-                        <input id="edit-accommodation-img" type="file" class="form-control dropify" name="edit_image_path" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false" required>
+                        <input id="edit-accommodation-img" type="file" class="form-control dropify" name="edit_image_path" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="true" data-remove-text="Delete" style="width: 300px">
                     </div>
                     <div class="form-group">
                         <label for="cottage_qy">Cottage Quantity</label>
