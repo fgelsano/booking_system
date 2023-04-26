@@ -8,7 +8,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 use Illuminate\Support\Facades\Log;
 
-class PortController extends Controller
+class PortsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,6 @@ class PortController extends Controller
      */
     public function index(Request $request)
     {
-
-        
         if ($request->ajax()) {
             $ports = Port::latest()->get();
             // dd($data);
@@ -45,7 +43,6 @@ class PortController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'port_name' => 'required|max:255',
             'pier_number' => 'required|integer',
@@ -57,7 +54,6 @@ class PortController extends Controller
         $ports->save();
     
         return redirect()->route('ports.index')->with('success', 'Port created successfully.');
-        
     }
 
     /**
@@ -75,17 +71,17 @@ class PortController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id 
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $ports = Port::findOrFail($id);
 
-    return response()->json([
-        'data' => $ports,
-        'message' => 'Port data retrieved successfully'
-    ]);
+        return response()->json([
+            'data' => $ports,
+            'message' => 'Port data retrieved successfully'
+        ]);
     }
 
     /**
@@ -98,31 +94,26 @@ class PortController extends Controller
     public function update(Request $request, $id)
     {
         // log the request data
-    Log::debug('Request data:', $request->all());
+        Log::debug('Request data:', $request->all());
 
-    // get the input values
-    $name = $request->input('edit-ports-name');
-    $pier_number = $request->input('edit-pier-number');
+        // get the input values
+        $name = $request->input('edit-ports-name');
+        $pier_number = $request->input('edit-pier-number');
 
-    // log the input values
-    Log::debug('Input values:', [
-        'name' => $name,
-        'pier_number' => $pier_number,
-    ]);
+        // log the input values
+        Log::debug('Input values:', [
+            'name' => $name,
+            'pier_number' => $pier_number,
+        ]);
 
-    // update the ports data in the database
-    $ports = Port::find($id);
-    $ports->name = $name;
-    $ports->pier_number = $pier_number;
-    $ports->save();
-    
-    
-    return view('admin.settings.ports.index')->with('success', 'Ports loaded successfully');
-    
-   
-   
-
- 
+        // update the ports data in the database
+        $ports = Port::find($id);
+        $ports->name = $name;
+        $ports->pier_number = $pier_number;
+        $ports->save();
+        
+        
+        return view('admin.settings.ports.index')->with('success', 'Ports loaded successfully');
     }
 
     /**

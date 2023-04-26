@@ -46,18 +46,10 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-<<<<<<< Updated upstream
-        // toastr()->success('Successfully Log out');
-=======
->>>>>>> Stashed changes
         return redirect('/login');
     }
     protected function authenticated(Request $request, $user)
     {
-<<<<<<< Updated upstream
-        // toastr()->success('Welcome back, ' . $user->name);
-=======
->>>>>>> Stashed changes
         return redirect()->intended($this->redirectPath());
     }
 }

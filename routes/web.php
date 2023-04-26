@@ -29,14 +29,12 @@ Route::group(['middleware' => 'publicURL'], function(){
 Route::group(['middleware' => 'privateURL'], function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/bookings', [App\Http\Controllers\BookingsController::class, 'index'])->name('bookings.index');
-    Route::get('/dashboard/settings/ports/{id}/edit', [App\Http\Controllers\PortController::class, 'edit'])->name('ports.edit');
     // Route::resource('/dashboard/bookings', 'App\Http\Controllers\BookingsController');
     Route::resource('/dashboard/passengers', 'App\Http\Controllers\PassengersController');
     Route::resource('/dashboard/payments', 'App\Http\Controllers\PaymentsController');
 
 
     Route::resource('/dashboard/reports', 'App\Http\Controllers\ReportsController');
-    Route::resource('/dashboard/schedules', 'App\Http\Controllers\SchedulesController');
     Route::resource('/dashboard/users', 'App\Http\Controllers\VesselsController');
  
 
@@ -44,15 +42,8 @@ Route::group(['middleware' => 'privateURL'], function(){
     
     Route::resource('/dashboard/settings/rates', 'App\Http\Controllers\RatesController');
     Route::resource('/dashboard/settings/vessels', 'App\Http\Controllers\VesselsController');
-    Route::resource('/dashboard/settings/ports', 'App\Http\Controllers\PortController');
-
-    //Schedules Routes
-    Route::get('fullcalender', [App\Http\Controllers\FullCalenderController::class, 'index']);
-    Route::post('fullcalenderAjax', [App\Http\Controllers\FullCalenderController::class, 'ajax']);
-    Route::get('/dashboard/settings/schedules',[App\Http\Controllers\SchedulesController::class, 'create'])->name('schedules.add');
-
-
-
-   
+    Route::resource('/dashboard/settings/ports', 'App\Http\Controllers\PortsController');
+    Route::resource('/dashboard/settings/accomodations', 'App\Http\Controllers\AccomodationsController');
+    Route::resource('/dashboard/settings/schedules', 'App\Http\Controllers\SchedulesController'); 
 
 });
