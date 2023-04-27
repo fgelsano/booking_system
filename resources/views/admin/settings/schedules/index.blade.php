@@ -95,7 +95,7 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <form method="POST" action="{{ route('schedules.store') }}" id="accommodationForm" name="accommodationForm" class="form-horizontal" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('schedules.store') }}" id="schedulesForm" name="schedulesForm" class="form-horizontal" enctype="multipart/form-data">
                       @csrf
                       <div class="form-group">
                           <label for="vessel_id" class="control-label">Vessel Name:</label>
@@ -112,12 +112,12 @@
                         <input type="text" class="form-control" id="add-destination" name="destination" required />
                     </div>
                     <div class="form-group">
-                      <label for="departure-date" class="control-label">Departure Date:</label>
-                      <input type="date" class="form-control" id="add-departure-date" name="departure-date" required />
+                      <label for="departure_date" class="control-label">Departure Date:</label>
+                      <input type="date" class="form-control" id="add-departure-date" name="departure_date" required />
                   </div>
                   <div class="form-group">
-                    <label for="origin" class="control-label">Departure Time:</label>
-                    <input type="time" class="form-control" id="add-departure-time" name="departure-time" required />
+                    <label for="departure_time" class="control-label">Departure Time:</label>
+                    <input type="time" class="form-control" id="add-departure-time" name="departure_time" required />
                 </div>
                       
                       <div class="modal-footer">
@@ -233,7 +233,7 @@
 
             //create
             $.ajax({
-            url: "{{ route('schedules.index') }}",
+            url: "{{ route('vessels.index') }}",
             type: "GET",
             dataType: "json",
             
@@ -241,32 +241,36 @@
                 console.log(data);
                 var options = "<option value=''>-- Select Vessel --</option>";
                 $.each(data.data, function(key, schedules) {
-                    options += "<option value='" + schedules.vessel_id + "'>" + schedules.vessel_name + "</option>";
+                    options += "<option value='" + schedules.id + "'>" + schedules.vessel_name + "</option>";
                 });
                 $("#add-vessel-id").html(options);
             },
             error: function(xhr) {
                 console.log(xhr.responseText);
-            }
+            }   
             });
 
-            $j('#accommodationForm').submit(function(event) {
-                event.preventDefault();
-                const formData = new FormData(document.getElementById('accommodationForm'));
+            $j('#schedulesForm').submit(function(event) {
+            event.preventDefault();
+            const vesselId = $('#add-vessel-id').val();
+            const formData = new FormData(document.getElementById('schedulesForm'));
+            formData.set('vessel_id', vesselId);
                 axios.post(event.target.action, formData, {
                         headers: {
                             'Accept': 'application/json',
                         }
                     })
                     .then(response => {
+                       
                         const dttb = $j('#schedules-table').DataTable();
-                        const form = $j('#accommodationForm')[0];
+                        const form = $j('#schedulesForm')[0];
                         form.reset();
                         dttb.ajax.reload();
                         $('#addSchedulesModal').modal('hide');
                         toastr.success(response.data.message, 'Success');
                     })
                     .catch(error => {
+                        
                         var errors = error.response.data.errors;
                         var error_msg = '';
                         $.each(errors, function(key, value) {
@@ -367,7 +371,6 @@
                         $("#edit-vessel-id").html(options).val(data.vessel_id);
                                     
                         $('input[name="edit_vessel_id"]').val(data.vessel_id);
-
                         $('input[name="edit-origin"]').val(data.origin);
                         $('input[name="edit-destination"]').val(data.destination);
                         $('input[name="edit-departure-date"]').val(data.departure_date);
@@ -407,11 +410,13 @@
                     toastr.error(error_msg, 'Error');
                 }
             });
-        });
-
-
 
         });
+         
+
+
+
+     });
     </script>
 
 @endsection

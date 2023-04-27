@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Models\Vessel;
+
 
 use Illuminate\Support\Facades\Log;
 
@@ -61,17 +63,23 @@ class SchedulesController extends Controller
      */
     public function store(Request $request)
     {
+       
+
     
         $validateData = $this->validateDataSchedules($request);
         $schedules = Schedule::created($validateData);
-        return response()->json($schedules, 201);
+      
 
-    
-        $schedules = Schedule::create($validateData);
+
         return response()->json([
             'success' => true,
+            'message' => 'Schedules successfully added',
             'data' => $schedules
         ])->header('Content-Type', 'application/json');
+
+    
+        
+       
     }
 
     /**
@@ -153,7 +161,9 @@ class SchedulesController extends Controller
             'vessel_id' => 'required|exists:vessels,id',
             'origin' => 'required',
             'destination' => 'required',
-           
+            'departure_date' => 'required|date',
+            'departure_time' => 'required|date_format:H:i',
+
         ]);
     }
 }

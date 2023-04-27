@@ -207,6 +207,8 @@ class AccomodationsController extends Controller
             'accommodation_name' => 'required',
             'image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'cottage_qy' => 'required|numeric',
+            
         ]);
     }
-}
+}   
+    
