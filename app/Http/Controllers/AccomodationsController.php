@@ -49,12 +49,14 @@ class AccomodationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {    
         $accommodations = DB::table('accommodations')
             ->join('vessels', 'accommodations.vessel_id', '=', 'vessels.id')
             ->select('accommodations.*', 'vessels.vessel_name')
             ->first();
-        return response()->json(['data' => $accommodations]);
+        return response()->json([
+            'data' => $accommodations
+        ]);
     }
 
     /**

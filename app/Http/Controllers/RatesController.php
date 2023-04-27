@@ -19,14 +19,12 @@ class RatesController extends Controller
             $data = Fare::latest()->get();
             return DataTables::of($data)->addColumn('action', function ($fare) {
                 $editUrl = route('rates.edit', $fare->id);
-                $viewUrl = route('rates.show', $fare->id);
                 $deleteUrl = route('rates.destroy', $fare->id);
 
                 $editButton = '<a href="' . $editUrl . '" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#editModal" data-id="' . $fare->id . '"><i class="fa fa-edit"></i>Edit</a>';
-                $viewButton = '<a href="' . $viewUrl . '" class="btn btn-success btn-sm view-btn" data-toggle="modal" data-target="#viewModals" data-id="' . $fare->id . '"><i class="fa fa-eye"></i>View</a>';
                 $deleteButton = '<button type="button" class="btn btn-danger btn-sm delete" data-url="' . $deleteUrl . '" data-id="' . $fare->id . '"><i class="fa fa-trash"></i>Delete</button>';
 
-                return $editButton . ' ' . $viewButton . ' ' . $deleteButton;
+                return $editButton . ' ' . $deleteButton;
             })
                 ->rawColumns(['action'])
                 ->make(true);

@@ -20,11 +20,8 @@
                     <table id="fares-table" class="table table-bordered table-hover" style="width:100%">
                         <thead class="text-center">
                             <tr>
-                                <th>ID</th>
-                                <th>Rates Name</th>
+                                <th>Rates </th>
                                 <th>Price</th>
-                                <th>Added On</th>
-                                <th>Updated On</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -97,30 +94,6 @@
     </div>
 </div>
 
-<!-- View Modal -->
-<div class="modal fade" id="viewModals" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewModalLabel">View Rates</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="fare_name">Rates Name</label>
-                    <p id="view-fare_name"></p>
-                </div>
-                <div class="form-group">
-                    <label for="fare_price">Price</label>
-                    <p id="view-price"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     var $j = jQuery.noConflict();
     $j(document).ready(function() {
@@ -130,24 +103,12 @@
             method: 'get',
             ajax: '/dashboard/settings/rates',
             columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
                     data: 'fare_name',
                     name: 'fare_name'
                 },
                 {
                     data: 'price',
                     name: 'price'
-                },
-                {
-                    data: 'created_at',
-                    name: 'Added On'
-                },
-                {
-                    data: 'updated_at',
-                    name: 'Updated On'
                 },
                 {
                     data: 'action',
@@ -159,16 +120,7 @@
             "createdRow": function(row, data, index) {
                 $('td', row).css('text-align', 'center');
             },
-            "columnDefs": [{
-                "targets": [3, 4],
-                "render": function(data, type, row) {
-                    if (type === 'display' || type === 'filter') {
-                        return moment.utc(data).local().format('MMM DD, YYYY h:mm A');
-                    } else {
-                        return data;
-                    }
-                }
-            }]
+
         });
         // Add Rates
         $('#new-rates').click(function() {
@@ -185,10 +137,11 @@
                 type: "POST",
                 data: form_data,
                 success: function(data) {
+                    const form = $j('#rates-form')[0];
+                    form.reset();
+                    dttb.ajax.reload();
                     $('#rates-modal').modal('hide');
                     toastr.success('Rates added successfully.');
-                    dttb.ajax.reload();
-                    table.draw();
                 },
                 error: function(xhr) {
                     var errors = xhr.responseJSON.errors;
@@ -238,127 +191,16 @@
                     toastr.error(error_msg, 'Error');
                 }
             });
-            // location.reload();
         });
-        // $(document).on('click', '.delete', function() {
-        //     var url = $(this).data('url');
-        //     if (confirm('Are you sure you want to delete this rate?')) {
-        //         $.ajax({
-        //             url: url,
-        //             type: 'DELETE',
-        //             data: {
-        //                 _token: '{{ csrf_token() }}'
-        //             },
-        //             success: function(data) {
-        //                 toastr.success('Rate deleted successfully.');
-        //                 table.draw();
-        //                 location.reload();
-        //             },
-        //             error: function(xhr) {
-        //                 toastr.error('Failed to delete rate.');
-        //             }
-        //         });
-        //         location.reload();
-        //     }
-        // });
-
-        // $(document).on('click', '.delete', function() {
-        //     var url = $(this).data('url');
-
-        //     toastr.options = {
-        //         "closeButton": true,
-        //         "positionClass": "toast-top-right",
-        //         "timeOut": 0,
-        //         "extendedTimeOut": 0,
-        //         "tapToDismiss": false,
-        //         "onShown": function(toast) {
-        //             toast.find('.toastr-confirm-btn-yes').click(function() {
-        //                 $.ajax({
-        //                     url: url,
-        //                     type: 'DELETE',
-        //                     dataType: 'json',
-        //                     data: {
-        //                         "_token": "{{ csrf_token() }}"
-        //                     },
-        //                     success: function(data) {
-        //                         toastr.success(data.message);
-        //                         $('#fares-table').DataTable().ajax.reload();
-        //                     },
-        //                     error: function(data) {
-        //                         toastr.error('Error deleting Rates.');
-        //                     }
-        //                 });
-        //             });
-
-        //             toast.find('.toastr-confirm-btn-no').click(function() {
-        //                 toastr.dismissAll();
-        //             });
-        //         }
-        //     };
-
-        //     toastr.warning('<br/><button type="button" class="btn btn-success toastr-confirm-btn-yes">Yes</button><button type="button" class="btn btn-danger toastr-confirm-btn-no">No</button>', 'Are you sure you want to delete this Rates?', {
-        //         allowHtml: true,
-        //         closeButton: false,
-        //         onShown: function(toast) {
-        //             $('.toast .toast-body').css('color', '#fff');
-        //         }
-        //     });
-        // });
-
-        $('#fares-table').on('click', '.view-btn', function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url: "{{ url('dashboard/settings/rates') }}/" + id,
-                type: "GET",
-                dataType: "json",
-                success: function(response) {
-                    var fare = response.fare
-                    $('#view-fare_name').html(fare.fare_name);
-                    $('#view-price').html(fare.price);
-                    $('#viewModals').modal('show');
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
-
-        // $(document).on('click', '.delete', function() {
-        //     var url = $(this).data('url');
-        //     swal({
-        //         title: "Are you sure?",
-        //         text: "Once deleted, you will not be able to recover this rate!",
-        //         icon: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#dc3545',
-        //         cancelButtonText: 'Cancel',
-        //         cancelButtonColor: '#6c757d',
-        //     }).then(function(result) {
-        //         if (result.value) {
-        //             $.ajax({
-        //                 url: url,
-        //                 type: 'DELETE',
-        //                 data: {
-        //                     _token: '{{ csrf_token() }}'
-        //                 },
-        //                 success: function(data) {
-        //                     toastr.success('Rate deleted successfully.');
-        //                     dttb.ajax.reload();
-        //                     table.draw();
-        //                 },
-        //                 error: function(xhr) {
-        //                     toastr.error('Failed to delete rate.');
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
         const swalWithBootstrapButtonss = Swal.mixin({
             customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
+                confirmButton: 'btn btn-success custom-green',
+                cancelButton: 'btn btn-danger custom-red',
+                actions: 'd-flex justify-content-center'
             },
-            buttonsStyling: false
+            buttonsStyling: true,
+            reverseButtons: true
+
         })
         $(document).on('click', '.delete', function() {
             var url = $(this).data('url');
@@ -401,7 +243,8 @@
                     result.dismiss === Swal.DismissReason.cancel
                 ) {
                     swalWithBootstrapButtonss.fire(
-                        'Cancelled Successfully'
+                        'Cancelled',
+                        'Your Data is Safe'
 
                     )
                 }
