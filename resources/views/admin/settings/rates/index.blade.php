@@ -20,11 +20,8 @@
                     <table id="fares-table" class="table table-bordered table-hover" style="width:100%">
                         <thead class="text-center">
                             <tr>
-                                <th>ID</th>
-                                <th>Rates Name</th>
+                                <th>Rates </th>
                                 <th>Price</th>
-                                <th>Added On</th>
-                                <th>Updated On</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -106,24 +103,12 @@
             method: 'get',
             ajax: '/dashboard/settings/rates',
             columns: [{
-                    data: 'id',
-                    name: 'id'
-                },
-                {
                     data: 'fare_name',
                     name: 'fare_name'
                 },
                 {
                     data: 'price',
                     name: 'price'
-                },
-                {
-                    data: 'created_at',
-                    name: 'Added On'
-                },
-                {
-                    data: 'updated_at',
-                    name: 'Updated On'
                 },
                 {
                     data: 'action',
@@ -135,16 +120,7 @@
             "createdRow": function(row, data, index) {
                 $('td', row).css('text-align', 'center');
             },
-            "columnDefs": [{
-                "targets": [3, 4],
-                "render": function(data, type, row) {
-                    if (type === 'display' || type === 'filter') {
-                        return moment.utc(data).local().format('MMM DD, YYYY h:mm A');
-                    } else {
-                        return data;
-                    }
-                }
-            }]
+
         });
         // Add Rates
         $('#new-rates').click(function() {
@@ -165,7 +141,7 @@
                     form.reset();
                     dttb.ajax.reload();
                     $('#rates-modal').modal('hide');
-                    toastr.success('Rates added successfully.');               
+                    toastr.success('Rates added successfully.');
                 },
                 error: function(xhr) {
                     var errors = xhr.responseJSON.errors;
@@ -218,10 +194,13 @@
         });
         const swalWithBootstrapButtonss = Swal.mixin({
             customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
+                confirmButton: 'btn btn-success custom-green',
+                cancelButton: 'btn btn-danger custom-red',
+                actions: 'd-flex justify-content-center'
             },
-            buttonsStyling: false
+            buttonsStyling: true,
+            reverseButtons: true
+
         })
         $(document).on('click', '.delete', function() {
             var url = $(this).data('url');
@@ -264,7 +243,8 @@
                     result.dismiss === Swal.DismissReason.cancel
                 ) {
                     swalWithBootstrapButtonss.fire(
-                        'Cancelled Successfully'
+                        'Cancelled',
+                        'Your Data is Safe'
 
                     )
                 }

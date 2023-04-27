@@ -60,29 +60,25 @@
             }
         });
         $.ajax({
-            url: "{{ route('accomodations.index') }}",
+            url: "{{ route('vessels.index') }}",
             type: "GET",
             dataType: "json",
             success: function(data) {
                 var options = "<option value=''>-- Select Vessel --</option>";
-                $.each(data.vessels, function(key, vessels) {
-                    options += "<option value='" + vessels.vessel_id + "'>" + vessels.vessel_name + "</option>";
-
+                $.each(data.data, function(key, value) {
+                    options += "<option value='" + value.id + "'>" + value.vessel_name + "</option>";
                 });
                 $("#add-vessel-id").html(options);
-                console.log(data.accommodations);
-                console.log(data.data);
-                console.log(data.vessles);
-                console.log(data);
             },
             error: function(xhr) {
                 console.log(xhr.responseText);
             }
         });
-
         $j('#accommodationForm').submit(function(event) {
             event.preventDefault();
+            const vesselId = $('#add-vessel-id').val();
             const formData = new FormData(document.getElementById('accommodationForm'));
+            formData.set('vessel_id', vesselId);
             axios.post(event.target.action, formData, {
                     headers: {
                         'Accept': 'application/json',
@@ -97,13 +93,14 @@
                     toastr.success(response.data.message, 'Success');
                 })
                 .catch(error => {
-                    var errors = xhr.responseJSON.errors;
+                    var errors = error.response.data.errors;
                     var error_msg = '';
                     $.each(errors, function(key, value) {
                         error_msg += value[0] + '<br>';
                     });
                     toastr.error(error_msg, 'Error');
                 });
+
         });
 
         $('#accommodations-table').on('click', '.edit', function() {

@@ -33,6 +33,6 @@
         </div>
     </div>
 </div>
-    @include('admin.settings.accomodations.partials._modalAccommodation')
-    @include('admin.settings.accomodations.partials._scriptAccommodation')
+    @include('admin.settings.accomodations.partials._modals')
+    @include('admin.settings.accomodations.partials._scripts')
 @endsection
