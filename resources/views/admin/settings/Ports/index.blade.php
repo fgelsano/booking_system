@@ -4,20 +4,35 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <div class="container-fluid">
-        <div class="toast" style="position: absolute; top: 0; right: 0; z-index: 999" data-delay="3000" data-autohide="false">
-            <div class="toast-header">
-              <img src="..." class="rounded mr-2" alt="...">
-              <strong class="mr-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
-              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="toast-body">
-              Hello, world! This is a toast message.
-            </div>
+<div class="container-fluid">
+    <div class="toast bg-danger" style="position: absolute; top:10px; right: 10px; z-index: 300" data-delay="3000" data-autohide="false">
+        <div class="toast-header">
+          <img src="..." class="rounded mr-2" alt="...">
+          <strong class="mr-auto">Are you sure you want to delete?</strong>
+          <small>11 mins ago</small>
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="toast-body" data-delay:="10">
+      
+        </div>
+    </div>  
+
+    {{-- <div class="toast" style="position: absolute; top: -4; right: 0; z-index: 999" data-delay="3000" data-autohide="false">
+        <div class="toast-header">
+        
+          <strong class="mr-auto"></strong>
+         
+          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+         Are you sure you want to delete?
+        </div>
+    </div> --}}
+
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -38,10 +53,8 @@
                          <table id="ports-table" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Port ID</th>
                                     <th>Port Name</th>
-                                    <th>Pier Number</th>
-                                    <th>Created At </th>
+                                    <th>Pier </th>
                                     <th>Action</th>
                     
                                 </tr>
@@ -73,7 +86,7 @@
                                                 <input id="port-name" type="text" placeholder="Port name" class="form-control" name="port_name" required autocomplete="name" autofocus>
                                             </div>
                                             <div class="input-group mb-3">
-                                                <input id="pier_number" type="number" placeholder="Pier number" class="form-control" name="pier_number" required autocomplete="name">
+                                                <input id="pier_number" type="text" placeholder="Pier number" class="form-control" name="pier_number" required autocomplete="name">
                                             </div>
                                     </div>
                                     <div class="modal-footer">
@@ -87,33 +100,7 @@
 
                      
                             
-                        <!-- View Modal  -->
-                        <div class="modal fade" id="view-port-modal" tabindex="-1" aria-labelledby="view-port-modal-label" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="view-modal-label">Port Details</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-
-                                    <form id = "view-modal-form">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="view-port-name">Port Name</label>
-                                                <p id="view-port-name"></p>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="view-pier-number">Pier Number</label>
-                                                <p id="view-pier-number"></p>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        
 
 
 
@@ -139,7 +126,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="edit-pier-number" class="col-form-label">Pier Number:</label>
-                                        <input type="number" class="form-control" id="edit-pier-number" name="edit-pier-number" required>
+                                        <input type="text" class="form-control" id="edit-pier-number" name="edit-pier-number" required>
                                     </div>
                                     </div>
                                     <div class="modal-footer">
@@ -164,13 +151,8 @@ $j(document).ready(function() {
         ajax: '{{ route('ports.index') }}', 
         method: 'get',
         compact: true,
-        order: [[3, "asc"]],
+        order: [[1, "asc"]],
         columns: [
-            {
-                data: 'id', 
-                name: 'id',
-                width: '20%',
-            },
             {
                 data: 'name', 
                 name: 'name',
@@ -181,13 +163,6 @@ $j(document).ready(function() {
                 data: 'pier_number', 
                 name: 'pier_number',
                 width: '20%',
-            },
-            {
-                data: 'created_at',
-                name: 'created_at',
-                type: 'date',
-              
-                orderable: false,
             },
             
             {
@@ -200,11 +175,11 @@ $j(document).ready(function() {
                     
                     return `
                         <div class="btn-group">
-                            <button data-id="${data['id']}" data-action="view" class="btn btn-info btn-sm view" data-toggle="modal" data-target="#view-port-modal" data-id="' + ports.id + '"><i class="fa fa-eye"></i> View</a></button>
+                           
                            
                             <button data-id="${data['id']}" data-action="edit" class="btn btn-primary btn-sm edit" data-toggle="modal" data-target="#edit-ports" data-id="' + ports.id + '"><i class="fa fa-edit"></i> Edit</a></button>
 
-                            <button data-id="${data['id']}" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i> Delete</button>
+                             <button data-id="${data['id']}" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i> Delete</button>
 
 
                         </div>
@@ -229,43 +204,100 @@ $j(document).ready(function() {
         
     });
             //delete
-    $(document).on('click', '.delete', function(e) {
-    $('.toast').toast('show');
-    e.preventDefault();
-    var clickedRow = $(this).closest('tr');
-    var id = $j(this).data('id');
+//             $(document).on('click', '.delete', function(e) {
+//     $('.toast').toast('show');
+//     e.preventDefault();
+//     var clickedRow = $(this).closest('tr');
+//     var id = $j(this).data('id');
+    
 
-    // toastr.options = {
-    //     "positionClass": "toast-top-center",
-    //     "timeOut": "3000",
-    //     "closeButton": true,
-    //     "progressBar": true,
-    // };
+//     // toastr.options = {
+//     //     "positionClass": "toast-top-center",
+//     //     "timeOut": "3000",
+//     //     "closeButton": true, 
+//     //     "progressBar": true,
+//     // };
 
-    // toastr.warning('Are you sure you want to delete this Port?', 'Confirmation', {
-    //     "onclick": function() {
-    //         $.ajax({
-    //             url: "{{ url('dashboard/settings/ports') }}/" + id,
-    //             type: 'DELETE',
-    //             data: {
-    //                 "_token": "{{ csrf_token() }}",
-    //             },
-    //             success: function(data) {
-    //                 console.log('Delete request succeeded:');
-    //                 if (data.status && data.status === 'error') {
-    //                     toastr.error(data.message || 'An error occurred while deleting the Port!');
-    //                 } else {
-    //                     toastr.success('Port deleted successfully!', 'Success');
-    //                     clickedRow.remove();
-    //                 }
-    //             },
-    //             error: function(xhr, status, error) {
-    //                 console.log("Error callback called.", error);
-    //                 toastr.error(xhr.responseText || 'An error occurred while deleting the Port!');
-    //             }
-    //         });
-    //     }
-    // });
+//     // toastr.warning('Are you sure you want to delete this Port?', 'Confirmation', {
+//     //     "onclick": function() {
+//     //         $.ajax({
+//     //             url: "{{ url('dashboard/settings/ports') }}/" + id,
+//     //             type: 'DELETE',
+//     //             data: {
+//     //                 "_token": "{{ csrf_token() }}",
+//     //             },
+//     //             success: function(data) {
+//     //                 console.log('Delete request succeeded:');
+//     //                 if (data.status && data.status === 'error') {
+//     //                     toastr.error(data.message || 'An error occurred while deleting the Port!');
+//     //                 } else {
+//     //                     toastr.success('Port deleted successfully!', 'Success');
+//     //                     clickedRow.remove();
+//     //                 }
+//     //             },
+//     //             error: function(xhr, status, error) {
+//     //                 console.log("Error callback called.", error);
+//     //                 toastr.error(xhr.responseText || 'An error occurred while deleting the Port!');
+//     //             }
+//     //         });
+//     //     }
+//     // });
+// });
+
+
+
+// Delete button click event
+$(document).on('click', '.delete', function() {
+    // Get the ID of the item to delete
+    var id = $(this).data('id');
+    
+    // Show the confirmation toast
+    var toast = $('.toast');
+    toast.find('.toast-header strong').text('Confirm Delete');
+    toast.find('.toast-body').html('Are you sure you want to delete? <br><button class="btn btn-danger confirm-delete" data-id="' + id + '">Yes</button> <button class="btn btn-secondary" type="button" data-dismiss="toast">No</button>');
+    toast.toast('show');
+});
+
+// Confirm delete button click event
+$(document).on('click', '.confirm-delete', function() {
+    // Get the ID of the item to delete
+    var id = $(this).data('id');
+    
+    // Send the delete request via AJAX
+    $.ajax({
+        url: "{{ url('dashboard/settings/ports') }}/" + id,
+        type: 'DELETE',
+        dataType: 'json',
+        data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+        success: function(data) {
+            // Show success toast notification
+            const dttb = $j('#ports-table').DataTable();
+
+            dttb.ajax.reload();
+            var toast = $('.toast');
+            toast.find('.toast-header strong').text('Success');
+            toast.find('.toast-body').text('Item deleted successfully.');
+            toast.toast('show');
+
+            
+            // Remove the item from the table
+            $('#' + id).remove();
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            // Show error toast notification
+            const dttb = $j('#ports-table').DataTable();
+
+            dttb.ajax.reload();
+            var toast = $('.toast');
+            toast.find('.toast-body').text('Item deleted successfully.');
+            toast.toast('show');
+        }
+    });
+    
+    // Hide the confirmation toast
+    $('.toast').toast('hide');
 });
 
 
@@ -274,31 +306,8 @@ $j(document).ready(function() {
 
 
 
-            //view
-         $j('#ports-table').on('click', '.view', function() {
-            var id = $j(this).data('id');
-            $.ajax({
-                url: "{{ url('dashboard/settings/ports') }}/" + id,
-                type: "GET",
-                dataType: "json",
-                success: function(response) {
-                var ports = response.data;
-                var portName = $(this).data('view-port-name');
-                var pierNumber = $(this).data('view-pier-number');
 
-            
-                    // populate the modal with the data
-                    $j('#view-port-name').html(ports.name);
-                    $j('#view-pier-number').html(ports.pier_number);
-                    $('#view-port-modal').modal('show');
-                
-                
-                },
-                error: function(xhr) {
-                console.log(xhr.responseText);
-                }   
-            });
-        });
+         
 
             //edit
             $j('#ports-table').on('click', '.edit', function() {
@@ -350,7 +359,7 @@ $j('#add-ports-form').submit(function(event) {
         })
         .catch(error => {
             console.log(error);
-            toastr.error(error.data, 'Error');
+            toastr.error(error.data, 'Error, Pier must be in Number');
         });
 });
 

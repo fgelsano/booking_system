@@ -116,19 +116,23 @@
                 url: "/dashboard/settings/accomodations/" + accommodation_id + "/edit",
                 type: "GET",
                 success: function(data) {
+                    var imageUrl = data.image_url;
+                    console.log(imageUrl);
                     $('#edit-accommodation-form').attr('action', "/dashboard/settings/accomodations/" + accommodation_id);
                     var options = "<option value=''>-- Select Vessel --</option>";
-
+                    // $.each(data.vessels, function(key, value) {
+                    //     options += "<option value='" + value.vessel_id + "'>" + value.vessel_name + "</option>";
+                    // });
+                    
                     $.each(data.vessels, function(key, value) {
                         options += "<option value='" + value.vessel_id + "'>" + value.vessel_name + "</option>";
                     });
-                    $("#edit-vessel-id").select().html(options).val(data.accommodation.vessel_name);
-                    $('input[name="edit_accommodation_name"]').val(data.accommodation.accommodation_name);
-                    $('input[name="edit_vessel_name"]').val(data.accommodation.vessel_name);
-
+                    
+                    $("#edit-vessel-id").html(options).val(data.accommodation.vessel_name);
                     console.log(data.accommodation.vessel_name);
-                    var imageUrl = data.image_url;
-                    if (imageUrl) {
+                    $('input[name="edit_accommodation_name"]').val(data.accommodation.accommodation_name);
+r
+                    if (imageUl) {
                         var dropifyWrapper = $('.dropify-wrapper');
                         dropifyWrapper.find('.dropify-preview').removeClass('dropify-preview');
                         dropifyWrapper.find('.dropify-render img').attr('src', imageUrl);
@@ -141,12 +145,32 @@
                     $('#edit-accommodation-modal').modal('show');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR.responseText);
+                    console.log(jqXHR.responseText); 
                     console.log(textStatus);
                     console.log(errorThrown);
                 }
             });
         });
+
+        // $('#edit-accommodation-img').on('change', function(e) {
+        //     // get the selected file
+        //     var file = e.target.files[0];
+
+        //     // create a new FileReader object
+        //     var reader = new FileReader();
+
+        //     // set the onload function of the reader
+        //     reader.onload = function(e) {
+        //         // set the src of the image element to the result of the reader
+        //         $('#edit-image-preview').attr('src', e.target.result);
+        //         // show the image element
+        //         $('#edit-image-preview').show();
+        //     }
+
+        //     // read the file as a Data URL
+        //     reader.readAsDataURL(file);
+        // });
+
         // Update Accommodation
         $('#edit-accommodation-form').on('submit', function(e) {
             e.preventDefault();
@@ -172,6 +196,30 @@
                 }
             });
         });
+
+        // $('#edit-accommodation-form').on('submit', function(e) {
+        //     e.preventDefault();
+        //     var accommodation_id = $('input[name="accommodation_id"]').val();
+        //     var form_data = $(this).serialize();
+        //     axios.put("/dashboard/settings/accomodations/" + accommodation_id, form_data)
+        //         .then(function(response) {
+        //             $('#edit-accommodation-modal').modal('hide');
+        //             $('#accommodations-table').DataTable().ajax.reload();
+        //             table.draw();
+        //             toastr.success('Accommodations Updated successfully.');
+        //         })
+        //         .catch(function(error) {
+        //             var errors = error.response.data.errors;
+        //             var error_msg = '';
+        //             $.each(errors, function(key, value) {
+        //                 error_msg += value[0] + '<br>';
+        //             });
+        //             toastr.error(error_msg, 'Error');
+        //         });
+        // });
+
+
+
         // View Function with Image
         $j('#accommodations-table').on('click', '.view', function() {
             var id = $j(this).data('id');
@@ -202,10 +250,10 @@
                             'background-size': 'cover'
                         });
                     } else {
-                        var accomodationImg = baseUrl + '/storage/accommodation-images/' + data.data.image_path;
+                        var accomodationImg = baseUrl + '/storage/accommodation-images/'+ data.data.image_path;
                         console.log(accomodationImg);
                         modal.find('#view-accommodation-img').css({
-                            'background': 'url(' + accomodationImg + ') center center',
+                            'background': 'url(' +accomodationImg+ ') center center',
                             'background-size': 'cover'
                         });
                     }
