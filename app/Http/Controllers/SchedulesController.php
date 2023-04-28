@@ -6,6 +6,8 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Vessel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Exception;
 
 
 use Illuminate\Support\Facades\Log;
@@ -47,11 +49,13 @@ class SchedulesController extends Controller
     public function create()
     {
 
-        $schedules = Schedule::table('schedules')
-            ->join('schedules', 'schedules.vessel_id', '=', 'vessels.id')
+        $schedules = Schedule::from('schedules')
+            ->join('vessels', 'schedules.vessel_id', '=', 'vessels.id')
             ->select('schedules.*', 'vessels.vessel_name')
             ->first();
-        return response()->json(['data' => $schedules]);
+            
+            return response()->json(['data' => $schedules]);
+
         // return view('admin.settings.schedules.add');
     }
 
@@ -63,23 +67,14 @@ class SchedulesController extends Controller
      */
     public function store(Request $request)
     {
-       
-
-    
-        $validateData = $this->validateDataSchedules($request);
-        $schedules = Schedule::created($validateData);
-      
-
-
+        $validatedData = $this->validateDataSchedules($request);
+        $schedules = Schedule::create($validatedData);
+        
         return response()->json([
             'success' => true,
-            'message' => 'Schedules successfully added',
+            'message' => 'Schedule successfully added',
             'data' => $schedules
-        ])->header('Content-Type', 'application/json');
-
-    
-        
-       
+        ], 200);    
     }
 
     /**
@@ -94,10 +89,10 @@ class SchedulesController extends Controller
         ->select('schedules.*', 'vessels.vessel_name')
         ->findOrFail($id);
 
-    return response()->json([
-        'success' => true,
-        'data' => $schedules
-    ], 200);
+        return response()->json([
+            'success' => true,
+            'data' => $schedules
+        ], 200);
     }
 
     /**
@@ -109,17 +104,17 @@ class SchedulesController extends Controller
     public function edit($id)
     {
         try {
-        $schedules = Schedule::join('vessels', 'vessels.id', '=', 'schedules.vessel_id')
-            ->select('schedules.*', 'vessels.vessel_name')
-            ->where('schedules.id', $id)
-            ->firstOrFail();
+            $schedules = Schedule::join('vessels', 'vessels.id', '=', 'schedules.vessel_id')
+                ->select('schedules.*', 'vessels.vessel_name')
+                ->where('schedules.id', $id)
+                ->firstOrFail();
 
-        return response()->json(['success' => true, 'data' => $schedules], 200);
-    } catch (ModelNotFoundException $e) {
-        return response()->json(['success' => false, 'message' => 'Schedule not found'], 404);
-    } catch (Exception $e) {
-        return response()->json(['success' => false, 'message' => 'Something went wrong. Please try again.'], 500);
-    }
+            return response()->json(['success' => true, 'data' => $schedules], 200);
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['success' => false, 'message' => 'Schedule not found'], 404);
+            } catch (Exception $e) {
+                return response()->json(['success' => false, 'message' => 'Something went wrong. Please try again.'], 500);
+        }
     }
 
     /**
