@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-6">
-                            Accommodations
+                            <h4 class="mb-0">Accommodations</h4>
                         </div>
                         <div class="col-md-6 text-right">
                             <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addAccommodationModal">New Accommodations</a>
@@ -19,7 +19,6 @@
                     <table id="accommodations-table" class="table table-bordered table-hover" style="width:100%">
                         <thead class="text-center">
                             <tr>
-                                <th>ID</th>
                                 <th>Vessel Name</th>
                                 <th>Accommodation Name</th>
                                 <th>Accommodation Image</th>
