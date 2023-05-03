@@ -1,8 +1,8 @@
 <!-- Add Modal With Image -->
 <div class="modal fade" id="addAccommodationModal" tabindex="-1" role="dialog" aria-labelledby="addAccommodationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 rounded-4">
+            <div class="modal-header bg-primary text-white border-0 rounded-top">
                 <h5 class="modal-title" id="addAccommodationModalLabel">Add Accommodation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -22,15 +22,19 @@
                         <input type="text" class="form-control" id="add-accommodation-name" name="accommodation_name" required />
                     </div>
                     <div class="form-group">
-                        <input id="add-accommodation-img" type="file" class="form-control dropify" name="image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="false"  style="width: 300px">
+                        <input id="add-accommodation-img" type="file" class="form-control dropify" name="image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="true" style="width: 470px">
                     </div>
                     <div class="form-group">
                         <label for="cottage_qy" class="control-label">Cottage Quantity:</label>
                         <input type="number" class="form-control" id="add-cottage-qy" name="cottage_qy" required />
                     </div>
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <input type="submit" value="Save" class="btn btn-primary">
+                    </div> -->
+                    <div class="modal-footer border-0 rounded-bottom">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-dismiss="modal">Cancel</button>
+                        <input type="submit" value="Save" class="btn btn-primary rounded-pill px-4 ml-3">
                     </div>
                 </form>
             </div>
@@ -81,10 +85,10 @@
 
 <!-- Edit Modal -->
 <div class="modal fade" id="edit-accommodation-modal" tabindex="-1" role="dialog" aria-labelledby="edit-accommodation-modal-title" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="edit-accommodation-modal-title">Edit Accommodation</h5>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 rounded-4">
+            <div class="modal-header bg-primary text-white border-0 rounded-top">
+                <h5 class="modal-title" id="edit-accommodation-modal-title">Update Accommodation</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -96,7 +100,7 @@
                     <input type="hidden" name="accommodation_id" id="accommodation_id">
                     <div class="form-group">
                         <label for="vessel_id">Vessels</label>
-                        <select class="form-control" name="edit_vessel_id" id="edit-vessel-id"></select>
+                        <select class="form-control" name="edit_vessel_name" id="edit-vessel-id"></select>
                     </div>
                     <div class="form-group">
                         <label for="accommodation_name">Accommodation Name</label>
@@ -104,16 +108,29 @@
                     </div>
                     <div class="form-group">
                         <label for="image_path">Accommodation Image</label>
-                        <input id="edit-accommodation-img" type="file" class="form-control dropify" name="edit_image_path" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="true" data-remove-text="Delete" style="width: 300px">
+                        <input id="edit-accommodation-img" type="file" class="form-control dropify-edit" name="edit_image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="true" data-remove-text="Delete" style="width: 470px">
                     </div>
+
+                    <div class="dropify-wrapper">
+                        <div class="dropify-preview">
+                            <span class="dropify-render">
+                                <img src=""/>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="image_path">Accommodation Image</label>
+                            <input id="edit-accommodation-img" type="file" class="form-control dropify-edit" name="edit_image_path" data-default-file="" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png gif" data-show-remove="true" data-remove-text="Delete" style="width: 470px">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="cottage_qy">Cottage Quantity</label>
                         <input type="number" class="form-control" name="edit_cottage_qy" id="edit-cottage_qy">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="edit-accommodation-btn">Update</button>
+                <div class="modal-footer border-0 rounded-bottom">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 ml-3" id="edit-accommodation-btn">Save</button>
                 </div>
             </form>
         </div>

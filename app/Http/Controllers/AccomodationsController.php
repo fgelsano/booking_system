@@ -49,7 +49,7 @@ class AccomodationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {    
+    {
         $accommodations = DB::table('accommodations')
             ->join('vessels', 'accommodations.vessel_id', '=', 'vessels.id')
             ->select('accommodations.*', 'vessels.vessel_name')
@@ -72,11 +72,14 @@ class AccomodationsController extends Controller
 
         if ($accommodationImg) {
             $destinationPath = public_path('storage/accommodation-images');;
-            $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
+            $originalName = $accommodationImg->getClientOriginalName();
+            $imageName = date('YMdHis') . "-" . str_replace(' ', '-', $originalName);
+            $profileImage = $imageName . "." . $accommodationImg->getClientOriginalExtension();
             $validateData['image_path'] = $profileImage;
         } else {
             $validateData['image_path'] = "No Image uploaded";
         }
+
 
         $accommodations = Accommodation::create($validateData);
         if ($accommodations) {
@@ -126,14 +129,19 @@ class AccomodationsController extends Controller
         // ]);
         // $accommodation = Accommodation::find($id);
         $vessels = Vessel::all();
+        
         $accommodation = DB::table('accommodations')
             ->join('vessels', 'vessels.id', '=', 'accommodations.vessel_id')
             ->select('accommodations.*', 'vessels.vessel_name')
             ->where('accommodations.id', $id)
             ->first();
 
-        $image_url = $accommodation->image_path ? asset('storage/accommodation-images/' . $accommodation->image_path) : null;
+        $image_url = null;
+        if ($accommodation->image_path) {
+            $image_url = asset('storage/accommodation-images/' . $accommodation->image_path);
+        }
 
+       
         return response()->json([
             'accommodation' => $accommodation,
             'vessels' => $vessels,
@@ -157,7 +165,7 @@ class AccomodationsController extends Controller
         if ($accommodationImg) {
             $destinationPath = public_path('storage/accommodation-images');
             $oldImage = $accommodation->image_path;
-            
+
             if ($oldImage !== "No Image uploaded") {
                 $imagePath = $destinationPath . '/' . $oldImage;
                 if (file_exists($imagePath)) {
@@ -165,9 +173,11 @@ class AccomodationsController extends Controller
                 }
             }
 
-            $profileImage = date('YMdHis') . "-" . $accommodationImg->getClientOriginalName() . "." . $accommodationImg->getClientOriginalExtension();
+            $originalName = $accommodationImg->getClientOriginalName();
+            $imageName = date('YMdHis') . "-" . str_replace(' ', '-', $originalName);
+            $profileImage = $imageName . "." . $accommodationImg->getClientOriginalExtension();
             $validateData['image_path'] = $profileImage;
-            $accommodationImg->move($destinationPath, $profileImage);
+            $accommodationImg->move($destinationPath, $imageName);
         }
 
         $accommodation->update($validateData);
@@ -175,7 +185,8 @@ class AccomodationsController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Accommodation updated successfully.',
-            'data' => $accommodation
+            'data' => $accommodation,
+            'image_url' => $imageName
         ])->header('Content-Type', 'application/json');
     }
 
