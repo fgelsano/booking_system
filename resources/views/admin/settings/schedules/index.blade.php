@@ -1,5 +1,10 @@
 @extends('layouts.admin.app')
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-yQvzI1XMW+CGZmhCp16lE1vIaAcaW8Un73slLrNhXgYn5zhBzW8ewNKMLw1n/rDPO3oC+2W8I94S+uz9VYmvlQ==" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-KQLzNjjb/SPQ/2+O/JfgJh/BziC1hSdMz9nUqLgs8z7QZw4cUJ7Gp+px6eRgVfj66DY1Y9RKsA//Pl+8aAZ19w==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -22,11 +27,12 @@
                         <table id="schedules-table" class="table table-bordered table-hover" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Schedule ID</th>
+                                    <th>Schedules ID</th>
                                     <th>Vessel Name</th>
                                     <th>Origin</th>
                                     <th>Destination</th>
                                     <th>Departure Date</th>
+                                    <th>Departure Date Range</th>
                                     <th>Departure Time</th>
                                     <th>Action</th>
                                
@@ -65,12 +71,18 @@
                         <div class="form-group">
                           <label for="view-destination">Destination</label>
                           <p id="view-destination"></p>
-                      </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="view-departure-date">Departure Date</label>
                             <p id="view-departure-date"></p>
                         </div>
+
+                        <div class="form-group">
+                            <label for="view-departure-date-range">Departure Date Range</label>
+                            <p id="view-departure-date-range"></p>
+                        </div>
+                        
                         <div class="form-group">
                             <label for="view-departure-time">Departure Time</label>
                             <p id="view-departure-time"></p>
@@ -112,13 +124,20 @@
                         <input type="text" class="form-control" id="add-destination" name="destination" required />
                     </div>
                     <div class="form-group">
-                      <label for="departure_date" class="control-label">Departure Date:</label>
-                      <input type="date" class="form-control" id="add-departure-date" name="departure_date" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="departure_time" class="control-label">Departure Time:</label>
-                    <input type="time" class="form-control" id="add-departure-time" name="departure_time" required />
-                </div>
+                        <label for="departure_date" class="control-label">Departure Date:</label>
+                        <div class="input-daterange input-group" id="departure_date">
+                          <input type="date" class="form-control" name="departure_date" id="add-departure-date" required>
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">to</span>
+                          </div>
+                          <input type="date" class="form-control" name="departure_date_range" id="departure_date_range" required>
+                        </div>
+                    </div>
+                      
+                    <div class="form-group">
+                        <label for="departure_time" class="control-label">Departure Time:</label>
+                        <input type="time" class="form-control" id="add-departure-time" name="departure_time" required />
+                    </div>
                       
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -147,24 +166,31 @@
                         <input type="hidden" name="schedules_id" id="schedules_id">
                         <div class="form-group">
                             <label for="vessel_id">Vessels</label>
-                            <select class="form-control" name="edit_vessel_id" id="edit-vessel-id">
+                            <select class="form-control" name="vessel_id" id="edit-vessel-id">
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="origin">Origin </label>
-                            <input type="text" class="form-control" name="edit-origin" id="edit-origin">
+                            <input type="text" class="form-control" name="origin" id="edit-origin" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="destination">Destination </label>
+                            <input type="text" class="form-control" name="destination" id="edit-destination" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="departure_date" class="control-label">Departure Date:</label>
+                            <div class="input-daterange input-group" id="departure_date">
+                                <input type="date" class="form-control" name="departure_date" id="edit-departure-date" required>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">to</span>
+                                    </div>
+                                <input type="date" class="form-control" name="departure_date_range" id="edit-departure-date-range" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                        <label for="destination">Destination </label>
-                        <input type="text" class="form-control" name="edit-destination" id="edit-destination">
-                    </div>
-                    <div class="form-group">
-                        <label for="departure-date">Departure Date </label>
-                        <input type="date" class="form-control" name="edit-departure-date" id="edit-departure-date">
-                    </div>
-                        <div class="form-group">
                             <label for="departure_time">Departure Time </label>
-                            <input type="time" class="form-control" name="edit-departure-time" id="edit-departure-time">
+                            <input type="time" class="form-control" name="departure_time" id="edit-departure-time" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -176,7 +202,7 @@
         </div>
     </div>
   
-    <script>
+    <script>    
         var $j = jQuery.noConflict();
         $j(document).ready(function() {
             $j('#schedules-table').DataTable({
@@ -190,6 +216,7 @@
                 {data: 'origin', name: 'origin'},
                 {data: 'destination', name: 'destination'},
                 {data: 'departure_date', name: 'departure_date'},
+                {data: 'departure_date_range', name: 'departure_date_range'},
                 {data: 'departure_time', name: 'departure_time'},
                 {
                     data: null,
@@ -210,26 +237,13 @@
                     "className":"text-center",
                 },
                 ],
-                "columnDefs": [
-                    {
-                        "targets": [3,4],
-                        "render": function(data, type, row){
-                            if(type === 'display' || type === 'filter'){
-                                return moment.utc(data).local().format('MMM DD, YYYY h:mm A');
-                                
-                            }else{
-                                return data;
-                            }
-                        }
-                    }
-                ]
             });
 
         });
              
 
         //view
-        $j('#schedules-table').on('click', '.view', function() {
+        $j(document).on('click', '.view', function() {
             var id = $j(this).data('id');          
             $.ajax({
                 url: "{{ url('dashboard/settings/schedules') }}/" + id,
@@ -241,6 +255,7 @@
                     var origin = $(this).data('view-origin');
                     var destination = $(this).data('view-destination');
                     var departure_date = $(this).data('view-departure-date');
+                    var departure_date_range = $(this).data('view-departure-date-range')
                     var departure_time = $(this).data('view-departure-time');
 
                     // populate the modal with the data
@@ -249,6 +264,7 @@
                     $j('#view-origin').text(schedules.origin);
                     $j('#view-destination').text(schedules.destination);  
                     $j('#view-departure-date').text(schedules.departure_date); 
+                    $j('#view-departure-date-range').text(schedules.departure_date_range)
                     $j('#view-departure-time').text(schedules.departure_time); 
                     $('#view-port-modal').modal('show');
                                 
@@ -261,26 +277,34 @@
         });
                
         // edit
-        $j('#schedules-table').on('click','.edit', function() {
+        $j(document).on('click','.edit', function(e) {
+            e.preventDefault();
             var id = $(this).data('id');
-            console.log(id); 
             $.ajax({
                 url: "/dashboard/settings/schedules/" + id + "/edit",
                 type: "GET",
                 
-                success: function(data) {
-                    var id = $(this).data('id');
-                    $('#edit-schedules-form').attr('action', "/dashboard/settings/schedules/" + id);
-                    var options = "<option value=''>-- Select Vessel --</option>";
-                    $.each(data.vessels, function(key, value) {
-                        options += "<option value='" + value.id + "'>" + value.vessel_name + "</option>";
-                    });
-                    $("#edit-vessel-id").html(options).val(data.vessel_id);
-                    $('input[name="edit-origin"]').val(data.origin);
-                    $('input[name="edit-destination"]').val(data.destination);
-                    $('input[name="edit-departure-date"]').val(data.departure_date);
-                    $('input[name="edit-departure-time"]').val(data.departure_time);
-                    $('#edit-accommodation-modal').modal('show');
+                success: function(data) { 
+                    var schedules = data.data
+          
+                    
+                    var options;
+                    $.each(data, function(key, schedules) {
+                        var vesselNames = Array.isArray(schedules.vessel_name) ? schedules.vessel_name.join(", ") : schedules.vessel_name;
+                        options += "<option value='" + schedules.vessel_id + "'>" + vesselNames + "</option>"; 
+                    }); 
+                   
+                    $j('#schedules_id').val(schedules.id);
+                    $j('#edit-vessel-id').empty().append(options).val(schedules.vessel_id).trigger('change');
+                    $('input[name="origin"]').val(schedules.origin);
+                    $('input[name="destination"]').val(schedules.destination);
+                    $('input[name="departure_date"]').val(schedules.departure_date);
+                    $('input[name="departure_date_range"]').val(schedules.departure_date_range);
+                    $('input[name="departure_time"]').val(schedules.departure_time);
+
+                    // Open the Edit Modal
+                    $('#edit-schedules-modal').modal('show');
+
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR.responseText); 
@@ -288,19 +312,19 @@
                     console.log(errorThrown);
                 }
             });
-
             $j('#edit-schedules-form').on('submit', function(e) {
                 e.preventDefault();
-                var id = $('input[name="id"]').val();
+                var schedules_id = $('input[name="schedules_id"]').val();
                 var form_data = $(this).serialize();
                 $.ajax({
-                    url: "{{ url('dashboard/settings/schedules') }}/" + id,
+                    url: "{{ url('dashboard/settings/schedules') }}/" + schedules_id,
                     type: 'PUT',
                     data: form_data,
                     success: function(data) {
-                        $('#edit-accommodation-modal').modal('hide');
-                        $('#schedules-table').DataTable().ajax.reload();
-                        table.draw();
+                        const dttb = $j('#schedules-table').DataTable();
+                        $('#edit-schedules-modal').modal('hide');
+                        dttb.ajax.reload();
+
                         toastr.success('Schedules Updated successfully.');
                     },
                     error: function(xhr) {
@@ -313,11 +337,12 @@
                     }
                 });
 
-            });
+            }); 
+
             
             
         });
-
+      
         //delete
         $j(document).on('click', '.delete', function(e) {
             e.preventDefault();

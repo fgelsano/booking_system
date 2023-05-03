@@ -14,6 +14,7 @@ class Schedule extends Model
         "origin",
         "destination",
         "departure_date",
+        "departure_date_range",
         "departure_time",  
     ];
 

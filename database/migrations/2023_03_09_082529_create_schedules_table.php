@@ -19,6 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->string('origin');
             $table->string('destination');
             $table->date('departure_date');
+            $table->date('deparutre_date_range');
             $table->time('departure_time');
             // $table->foreign('vessel_id')->references('id')->on('vessels')->onDelete('cascade');
             $table->timestamps();

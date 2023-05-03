@@ -22,7 +22,7 @@ class SchedulesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $schedules = Schedule::select('schedules.id', 'vessels.vessel_name as vessel_id', 'schedules.origin', 'schedules.destination', 'schedules.departure_date', 'schedules.departure_time')
+            $schedules = Schedule::select('schedules.id', 'vessels.vessel_name as vessel_id', 'schedules.origin', 'schedules.destination', 'schedules.departure_date', 'schedules.departure_date_range', 'schedules.departure_time')
                 ->join('vessels', 'vessels.id', '=', 'schedules.vessel_id')
                 ->get();
 
@@ -72,7 +72,7 @@ class SchedulesController extends Controller
         
         return response()->json([
             'success' => true,
-            'message' => 'Schedule successfully added',
+            'message' => 'Schedules successfully added',
             'data' => $schedules
         ], 200);    
     }
@@ -126,7 +126,7 @@ class SchedulesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validateData = $this->validateDataSchedules($request);
+        $validateData = $this->editvalidateDataSchedules($request);
         $schedules = Schedule::findOrFail($id);
 
 
@@ -157,7 +157,20 @@ class SchedulesController extends Controller
             'origin' => 'required',
             'destination' => 'required',
             'departure_date' => 'required|date',
-            'departure_time' => 'required|date_format:H:i',
+            'departure_date_range' => 'required|date',
+            'departure_time' => 'required',
+
+        ]);
+    }
+    public function editvalidateDataSchedules($request)
+    {
+        return $request->validate([
+            'vessel_id' => 'required|exists:vessels,id',
+            'origin' => 'required',
+            'destination' => 'required',
+            'departure_date' => 'required|date',
+            'departure_date_range' => 'required|date',
+            'departure_time' => 'required',
 
         ]);
     }
